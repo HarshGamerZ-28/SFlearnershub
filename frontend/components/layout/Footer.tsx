@@ -1,6 +1,7 @@
-// components/layout/Footer.tsx
+"use client";
+import { useState } from "react";
 import Link from "next/link";
-import { Zap, Twitter, Youtube, Linkedin, Github, Mail } from "lucide-react";
+import { Zap, Twitter, Youtube, Linkedin, Github, Mail, ArrowRight, CheckCircle } from "lucide-react";
 
 const FOOTER_LINKS = {
   "Salesforce Platform": [
@@ -27,9 +28,49 @@ const FOOTER_LINKS = {
 };
 
 export default function Footer() {
+  const [email, setEmail]     = useState("");
+  const [done, setDone]       = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setLoading(true);
+    // POST /api/subscribers
+    await new Promise(r => setTimeout(r, 800));
+    setDone(true);
+    setLoading(false);
+  };
+
   return (
     <footer className="border-t border-[rgba(91,114,240,0.12)] bg-dark-800/50 mt-16">
       <div className="max-w-7xl mx-auto px-6 py-14">
+        {/* Newsletter Section */}
+        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-brand-900/40 to-violet-900/30 border border-[rgba(91,114,240,0.15)]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="font-display font-semibold text-white mb-1">Stay Updated</h3>
+              <p className="text-sm text-slate-400">Get the latest Salesforce insights delivered to your inbox.</p>
+            </div>
+            {done ? (
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-sm font-semibold whitespace-nowrap">
+                <CheckCircle size={16} /> You're subscribed!
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto">
+                <input
+                  type="email" value={email} onChange={e => setEmail(e.target.value)}
+                  required placeholder="your@email.com"
+                  className="flex-1 sm:flex-none px-3 py-2 bg-dark-800/60 border border-[rgba(91,114,240,0.25)] rounded-lg text-xs text-white placeholder:text-slate-600 outline-none focus:border-[rgba(91,114,240,0.5)] transition-all"
+                />
+                <button type="submit" disabled={loading}
+                  className="btn-glow inline-flex items-center px-4 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-60 whitespace-nowrap">
+                  {loading ? "Subscribing…" : <><span>Subscribe</span> <ArrowRight size={12} className="ml-1" /></>}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {/* Brand */}
           <div>
@@ -76,9 +117,6 @@ export default function Footer() {
 
         <div className="border-t border-[rgba(91,114,240,0.08)] pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-600">
           <p>© {new Date().getFullYear()} SF Learners Hub. All rights reserved.</p>
-          <div className="flex gap-4">
-            <span className="text-slate-700 font-mono">Next.js + FastAPI + PostgreSQL</span>
-          </div>
         </div>
       </div>
     </footer>

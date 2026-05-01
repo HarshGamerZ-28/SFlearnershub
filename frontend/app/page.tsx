@@ -5,7 +5,6 @@ import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/layout/HeroSection";
 import CategoryGrid from "@/components/blog/CategoryGrid";
 import FeaturedBlogs from "@/components/blog/FeaturedBlogs";
-import NewsletterBanner from "@/components/layout/NewsletterBanner";
 
 export default function HomePage() {
   return (
@@ -23,7 +22,6 @@ export default function HomePage() {
             <FeaturedBlogs />
           </Suspense>
         </section>
-        <NewsletterBanner />
       </main>
       <Footer />
     </>
