@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"components\\\\blog\\\\BlogListClient.tsx -> @/lib/api\":{\"id\":\"components\\\\blog\\\\BlogListClient.tsx -> @/lib/api\",\"files\":[]}}"

@@ -1,6 +1,6 @@
 // app/layout.tsx — Root layout with fonts, providers, nav
 import type { Metadata } from "next";
-import "./globals.css";
+import "../styles/globals.css";
 
 export const metadata: Metadata = {
   title: { default: "SF Learners Hub — Master Salesforce, Conquer Your Goals", template: "%s | SF Learners Hub" },
