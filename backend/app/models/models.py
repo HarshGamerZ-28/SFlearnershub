@@ -44,7 +44,8 @@ class Category(Base):
     sort_order  = Column(Integer, default=0)
     created_at  = Column(DateTime(timezone=True), server_default=func.now())
 
-    parent      = relationship("Category", remote_side="Category.id", backref="children")
+    parent      = relationship("Category", remote_side=[id], back_populates="children")
+    children    = relationship("Category", back_populates="parent", lazy="selectin", order_by="Category.sort_order")
     posts       = relationship("PostCategory", back_populates="category")
 
 

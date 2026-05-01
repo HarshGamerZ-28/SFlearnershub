@@ -9,10 +9,7 @@ const nextConfig = {
     ],
   },
   async redirects() {
-    return [
-      // Preserve WordPress category URL structure
-      { source: "/category/:path*", destination: "/category/:path*", permanent: false },
-    ];
+    return [];
   },
 };
 

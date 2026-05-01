@@ -44,11 +44,13 @@ class CategoryOut(BaseModel):
     color: str
     icon: Optional[str]
     sort_order: int
-    children: Optional[List["CategoryOut"]] = []
     class Config:
         from_attributes = True
 
-CategoryOut.model_rebuild()
+class CategoryTreeOut(CategoryOut):
+    children: Optional[List["CategoryTreeOut"]] = []
+
+CategoryTreeOut.model_rebuild()
 
 
 # ─── Tag ─────────────────────────────────────────────────────────────────────

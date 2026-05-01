@@ -5,24 +5,24 @@ from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.database import get_db
 from app.models.models import Category
-from app.schemas.schemas import CategoryOut
+from app.schemas.schemas import CategoryTreeOut
 
 router = APIRouter()
 
-@router.get("", response_model=list[CategoryOut])
+@router.get("", response_model=list[CategoryTreeOut])
 async def list_categories(db: AsyncSession = Depends(get_db)):
     result = await db.execute(
         select(Category)
         .where(Category.parent_id == None)
-        .options(selectinload(Category.children))
+        .options(selectinload(Category.children).selectinload(Category.children))
         .order_by(Category.sort_order)
     )
     return result.scalars().all()
 
-@router.get("/{slug}", response_model=CategoryOut)
+@router.get("/{slug}", response_model=CategoryTreeOut)
 async def get_category(slug: str, db: AsyncSession = Depends(get_db)):
     result = await db.execute(
-        select(Category).where(Category.slug == slug).options(selectinload(Category.children))
+        select(Category).where(Category.slug == slug).options(selectinload(Category.children).selectinload(Category.children))
     )
     cat = result.scalar_one_or_none()
     if not cat:
