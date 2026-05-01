@@ -52,12 +52,12 @@ export default function HeroSection() {
         </h1>
 
         {/* Animated subtag */}
-        <div className="flex items-center justify-center gap-2 mb-4 text-slate-400 text-lg">
+        <div className="flex items-center justify-center gap-1 mb-4 text-slate-400 text-lg">
           <span>Learn</span>
-          <div className="relative h-8 overflow-hidden">
+          <div className="relative w-min overflow-hidden">
             <span
               key={tagIndex}
-              className="absolute inset-0 flex items-center justify-center text-brand-400 font-semibold animate-fade-up whitespace-nowrap"
+              className="inline-flex text-brand-400 font-semibold animate-fade-up whitespace-nowrap"
             >
               {TAGS[tagIndex]}
             </span>

@@ -38,33 +38,33 @@ export default function LoginPage() {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-500 to-violet-600 mb-4 shadow-glow-brand">
             <Zap size={26} className="text-white" />
           </div>
-          <h1 className="font-display text-2xl font-bold text-white">Welcome back</h1>
-          <p className="text-slate-500 text-sm mt-1">Sign in to the admin portal</p>
+          <h1 className="font-display text-4xl font-bold text-white">Welcome back</h1>
+          <p className="text-slate-400 text-base mt-2">Sign in to the admin portal</p>
         </div>
 
         {/* Card */}
-        <div className="glass rounded-2xl p-8 animated-border">
+        <div className="glass rounded-2xl p-8">
           {error && (
             <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-400 text-sm mb-5">
               <AlertCircle size={15} className="shrink-0" /> {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-semibold text-slate-400 mb-1.5">Email</label>
+              <label className="block text-sm font-semibold text-slate-300 mb-2">Email</label>
               <input
                 type="email" value={email} onChange={e => setEmail(e.target.value)}
                 required autoComplete="email"
-                className="w-full px-4 py-3 bg-dark-700/80 border border-[rgba(91,114,240,0.2)] rounded-xl text-sm text-white placeholder:text-slate-600 outline-none focus:border-[rgba(91,114,240,0.5)] focus:shadow-[0_0_0_3px_rgba(91,114,240,0.1)] transition-all"
+                className="w-full px-4 py-3 bg-dark-700/80 border border-[rgba(91,114,240,0.2)] rounded-xl text-base text-white placeholder:text-slate-600 outline-none hover:border-[rgba(91,114,240,0.5)] focus:border-[rgba(91,114,240,0.5)] focus:shadow-[0_0_0_3px_rgba(91,114,240,0.1)] transition-all"
                 placeholder="admin@sflearnershub.com"
               />
             </div>
 
             <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="text-xs font-semibold text-slate-400">Password</label>
-                <button type="button" className="text-xs text-brand-400 hover:text-brand-300 transition-colors">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-sm font-semibold text-slate-300">Password</label>
+                <button type="button" className="text-xs text-brand-400 hover:text-brand-300 transition-colors font-medium">
                   Forgot password?
                 </button>
               </div>
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 <input
                   type={showPw ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)}
                   required autoComplete="current-password"
-                  className="w-full px-4 py-3 pr-10 bg-dark-700/80 border border-[rgba(91,114,240,0.2)] rounded-xl text-sm text-white placeholder:text-slate-600 outline-none focus:border-[rgba(91,114,240,0.5)] focus:shadow-[0_0_0_3px_rgba(91,114,240,0.1)] transition-all"
+                  className="w-full px-4 py-3 pr-10 bg-dark-700/80 border border-[rgba(91,114,240,0.2)] rounded-xl text-base text-white placeholder:text-slate-600 outline-none hover:border-[rgba(91,114,240,0.5)] focus:border-[rgba(91,114,240,0.5)] focus:shadow-[0_0_0_3px_rgba(91,114,240,0.1)] transition-all"
                   placeholder="••••••••••"
                 />
                 <button type="button" onClick={() => setShowPw(!showPw)}
@@ -84,24 +84,24 @@ export default function LoginPage() {
 
             <button
               type="submit" disabled={loading}
-              className="w-full btn-glow flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white mt-2 disabled:opacity-60"
+              className="w-full btn-glow flex items-center justify-center gap-2 py-3 rounded-xl text-base font-semibold text-white mt-4 disabled:opacity-60 hover:bg-black transition-colors"
             >
               {loading ? <><Loader2 size={15} className="animate-spin" /> Signing in…</> : "Sign In →"}
             </button>
           </form>
 
-          <div className="mt-4 pt-4 border-t border-[rgba(91,114,240,0.1)] text-center">
-            <p className="text-xs text-slate-600">
-              Auth via{" "}
-              <code className="text-brand-500 font-mono">POST /api/auth/login</code>
-              {" → "}JWT access + refresh tokens
+          <div className="mt-5 pt-5 border-t border-[rgba(91,114,240,0.1)] text-center">
+            <p className="text-sm text-slate-400 leading-relaxed">
+              Your admin credentials are required to access the content management portal.
             </p>
           </div>
         </div>
 
-        <p className="text-center text-xs text-slate-600 mt-6">
-          <Link href="/" className="text-slate-500 hover:text-slate-300 transition-colors">← Back to SF Learners Hub</Link>
-        </p>
+        <div className="mt-8 text-center">
+          <Link href="/" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-[rgba(91,114,240,0.3)] text-slate-300 hover:text-white hover:border-[rgba(91,114,240,0.6)] hover:bg-[rgba(91,114,240,0.08)] transition-all text-sm font-medium">
+            ← Back to SF Learners Hub
+          </Link>
+        </div>
       </div>
     </div>
   );
