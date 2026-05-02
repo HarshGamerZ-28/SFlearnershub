@@ -42,7 +42,7 @@ export default function BlogCard({ post, featured = false }: Props) {
       >
         {post.featured_image ? (
           <Image
-            src={post.featured_image}
+            src={post.featured_image.startsWith('http') ? post.featured_image : `https://sflearnershub.com${post.featured_image}`}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"

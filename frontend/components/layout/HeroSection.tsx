@@ -69,6 +69,18 @@ export default function HeroSection() {
           Your ultimate Salesforce learning platform — from beginner admin guides to advanced integration patterns, all in one beautifully redesigned hub.
         </p>
 
+        {/* Home Video */}
+        <div className="max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
+          <video 
+            src="https://sflearnershub.com/wp-content/uploads/2026/01/m3raee3zxxrmr0cvga08nyg05m_result_.mp4" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="w-full h-auto object-cover"
+          />
+        </div>
+
         {/* CTA Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 mb-16 animate-fade-up stagger-3">
           <Link

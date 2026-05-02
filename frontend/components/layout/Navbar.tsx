@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import {
   Search, Menu, X, ChevronDown, Zap, BookOpen,
   Code2, Settings, Link2, GitBranch, GraduationCap,
-  Megaphone, Package
+  Megaphone, Package, Camera
 } from "lucide-react";
 
 const NAV_CATEGORIES = [
@@ -142,6 +142,14 @@ export default function Navbar() {
           >
             <BookOpen size={14} />
             All Blogs
+          </Link>
+
+          <Link
+            href="/gallery"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium"
+          >
+            <Camera size={14} />
+            Gallery
           </Link>
         </nav>
 
