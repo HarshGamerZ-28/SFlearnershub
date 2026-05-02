@@ -205,17 +205,22 @@ export default function BlogDetailClient({ post, related }: Props) {
             </div>
 
             {/* Featured image */}
-            {post.featured_image && (
-              <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden mb-8 border border-[rgba(91,114,240,0.15)]">
-                <Image
-                  src={post.featured_image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-            )}
+            <div className="relative aspect-video rounded-2xl overflow-hidden mb-8 border border-[rgba(91,114,240,0.15)] shadow-2xl bg-slate-800">
+              <img
+                src={
+                  post.featured_image && post.featured_image.length > 5
+                    ? post.featured_image.startsWith('http') 
+                      ? post.featured_image 
+                      : `https://sflearnershub.com${post.featured_image.startsWith('/') ? '' : '/'}${post.featured_image}`
+                    : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
+                }
+                alt={post.title || "Blog Post"}
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
+                }}
+              />
+            </div>
 
             {/* YouTube embed */}
             {ytId && (
@@ -224,13 +229,14 @@ export default function BlogDetailClient({ post, related }: Props) {
                   <Youtube size={16} className="text-red-500" />
                   <span className="text-sm font-semibold text-slate-300">Video Tutorial</span>
                 </div>
-                <div className="aspect-video">
+                <div className="aspect-video bg-black flex items-center justify-center">
                   <iframe
                     src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`}
                     title={`Video: ${post.title}`}
                     className="w-full h-full"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
+                    loading="lazy"
                   />
                 </div>
               </div>

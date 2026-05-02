@@ -8,13 +8,19 @@ import BlogDetailClient from "@/components/blog/BlogDetailClient";
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 async function getPost(slug: string) {
+  const url = `${API}/api/blogs/${slug}`;
+  console.log(`Fetching post from: ${url}`);
   try {
-    const res = await fetch(`${API}/api/blogs/${slug}`, {
-      next: { revalidate: 300 }, // ISR: revalidate every 5 minutes
+    const res = await fetch(url, {
+      next: { revalidate: 300 },
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`Fetch failed for ${slug}: ${res.status} ${res.statusText}`);
+      return null;
+    }
     return res.json();
-  } catch {
+  } catch (err) {
+    console.error(`Fetch error for ${slug}:`, err);
     return null;
   }
 }
