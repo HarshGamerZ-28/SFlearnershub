@@ -6,6 +6,7 @@ const nextConfig = {
       { protocol: "https", hostname: "**.wp.com" },
       { protocol: "https", hostname: "**.wordpress.com" },
       { protocol: "https", hostname: "i.ytimg.com" },
+      { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
   async redirects() {
