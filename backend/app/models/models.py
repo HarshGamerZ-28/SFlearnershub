@@ -5,18 +5,46 @@ from typing import List, Optional
 
 from sqlalchemy import (
     Boolean, Column, DateTime, ForeignKey, Integer,
-    String, Text, ARRAY, func
+    String, Text, func
 )
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID, ARRAY
+from sqlalchemy.engine.interfaces import Dialect
+from sqlalchemy.types import CHAR, TypeDecorator
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 
 from app.db.database import Base
 
 
+class GUID(TypeDecorator):
+    impl = CHAR
+    cache_ok = True
+
+    def load_dialect_impl(self, dialect: Dialect):
+        if dialect.name == "postgresql":
+            return dialect.type_descriptor(PG_UUID(as_uuid=True))
+        return dialect.type_descriptor(CHAR(36))
+
+    def process_bind_param(self, value, dialect: Dialect):
+        if value is None:
+            return value
+        if dialect.name == "postgresql":
+            return str(value)
+        if isinstance(value, uuid.UUID):
+            return str(value)
+        return value
+
+    def process_result_value(self, value, dialect: Dialect):
+        if value is None:
+            return value
+        if isinstance(value, uuid.UUID):
+            return value
+        return uuid.UUID(value)
+
+
 class User(Base):
     __tablename__ = "users"
 
-    id            = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id            = Column(GUID(), primary_key=True, default=uuid.uuid4)
     email         = Column(String(255), unique=True, nullable=False)
     username      = Column(String(100), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
@@ -33,11 +61,11 @@ class User(Base):
 class Category(Base):
     __tablename__ = "categories"
 
-    id          = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id          = Column(GUID(), primary_key=True, default=uuid.uuid4)
     name        = Column(String(255), nullable=False)
     slug        = Column(String(255), unique=True, nullable=False)
     description = Column(Text)
-    parent_id   = Column(UUID(as_uuid=True), ForeignKey("categories.id"), nullable=True)
+    parent_id   = Column(GUID(), ForeignKey("categories.id"), nullable=True)
     wp_term_id  = Column(Integer)
     color       = Column(String(7), default="#7C3AED")
     icon        = Column(String(50))
@@ -52,7 +80,7 @@ class Category(Base):
 class Tag(Base):
     __tablename__ = "tags"
 
-    id         = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id         = Column(GUID(), primary_key=True, default=uuid.uuid4)
     name       = Column(String(100), nullable=False)
     slug       = Column(String(100), unique=True, nullable=False)
     wp_term_id = Column(Integer)
@@ -64,12 +92,12 @@ class Tag(Base):
 class Post(Base):
     __tablename__ = "posts"
 
-    id              = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id              = Column(GUID(), primary_key=True, default=uuid.uuid4)
     title           = Column(String(500), nullable=False)
     slug            = Column(String(500), unique=True, nullable=False)
     excerpt         = Column(Text)
     content         = Column(Text, nullable=False)
-    author_id       = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    author_id       = Column(GUID(), ForeignKey("users.id"), nullable=True)
     youtube_url     = Column(Text)
     reading_time    = Column(Integer)
     difficulty      = Column(String(20), default="beginner")
@@ -77,7 +105,7 @@ class Post(Base):
     thumbnail_url   = Column(Text)
     meta_title      = Column(String(255))
     meta_description= Column(String(500))
-    meta_keywords   = Column(ARRAY(String))
+    meta_keywords   = Column(ARRAY(String), default=list)
     canonical_url   = Column(Text)
     og_image        = Column(Text)
     status          = Column(String(20), default="published")
@@ -98,8 +126,8 @@ class Post(Base):
 class PostCategory(Base):
     __tablename__ = "post_categories"
 
-    post_id     = Column(UUID(as_uuid=True), ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
-    category_id = Column(UUID(as_uuid=True), ForeignKey("categories.id", ondelete="CASCADE"), primary_key=True)
+    post_id     = Column(GUID(), ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
+    category_id = Column(GUID(), ForeignKey("categories.id", ondelete="CASCADE"), primary_key=True)
     is_primary  = Column(Boolean, default=False)
 
     post        = relationship("Post", back_populates="categories")
@@ -109,8 +137,8 @@ class PostCategory(Base):
 class PostTag(Base):
     __tablename__ = "post_tags"
 
-    post_id = Column(UUID(as_uuid=True), ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
-    tag_id  = Column(UUID(as_uuid=True), ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True)
+    post_id = Column(GUID(), ForeignKey("posts.id", ondelete="CASCADE"), primary_key=True)
+    tag_id  = Column(GUID(), ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True)
 
     post = relationship("Post", back_populates="tags")
     tag  = relationship("Tag", back_populates="posts")

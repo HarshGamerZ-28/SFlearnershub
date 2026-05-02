@@ -32,12 +32,23 @@ async def search_posts(
     )
 
     if q:
-        # PostgreSQL full-text search
-        fts_condition = text(
-            "to_tsvector('english', posts.title || ' ' || COALESCE(posts.excerpt,'') || ' ' || posts.content) "
-            "@@ plainto_tsquery('english', :q)"
-        ).bindparams(q=q)
-        base = base.where(fts_condition)
+        dialect_name = db.bind.dialect.name if db.bind is not None else "sqlite"
+        if dialect_name == "postgresql":
+            # PostgreSQL full-text search
+            fts_condition = text(
+                "to_tsvector('english', posts.title || ' ' || COALESCE(posts.excerpt,'') || ' ' || posts.content) "
+                "@@ plainto_tsquery('english', :q)"
+            ).bindparams(q=q)
+            base = base.where(fts_condition)
+        else:
+            search_term = f"%{q}%"
+            base = base.where(
+                or_(
+                    Post.title.ilike(search_term),
+                    Post.excerpt.ilike(search_term),
+                    Post.content.ilike(search_term),
+                )
+            )
 
     if category:
         base = base.join(PostCategory).join(Category).where(Category.slug == category)
