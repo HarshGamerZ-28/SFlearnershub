@@ -40,7 +40,7 @@ export default function BlogCard({ post, featured = false }: Props) {
           featured ? "lg:w-2/5 min-h-[200px]" : "h-52 sm:h-64 lg:h-48"
         )}
       >
-        <img
+        <Image
           src={
             post.featured_image && post.featured_image.length > 5
               ? post.featured_image.startsWith('http') 
@@ -49,14 +49,10 @@ export default function BlogCard({ post, featured = false }: Props) {
               : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
           }
           alt={post.title || "Blog Post"}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            if (!target.src.includes('unsplash')) {
-              target.src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
-            }
-          }}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={featured}
         />
         
         {/* Overlay badges */}

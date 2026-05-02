@@ -206,7 +206,7 @@ export default function BlogDetailClient({ post, related }: Props) {
 
             {/* Featured image */}
             <div className="relative aspect-video rounded-2xl overflow-hidden mb-8 border border-[rgba(91,114,240,0.15)] shadow-2xl bg-slate-800">
-              <img
+              <Image
                 src={
                   post.featured_image && post.featured_image.length > 5
                     ? post.featured_image.startsWith('http') 
@@ -215,10 +215,10 @@ export default function BlogDetailClient({ post, related }: Props) {
                     : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
                 }
                 alt={post.title || "Blog Post"}
-                className="absolute inset-0 w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop";
-                }}
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 1280px) 100vw, 1200px"
               />
             </div>
 

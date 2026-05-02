@@ -73,8 +73,28 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function BlogDetailPage({ params }: { params: { slug: string } }) {
   const post = await getPost(params.slug);
-  if (!post) notFound();
-
+  
+  if (!post) {
+    return (
+      <>
+        <Navbar />
+        <main className="min-h-screen flex items-center justify-center px-6">
+          <div className="text-center">
+            <h1 className="text-6xl font-display font-extrabold gradient-text mb-4">404</h1>
+            <p className="text-slate-400 text-lg mb-8">We couldn&apos;t find the blog post you&apos;re looking for.</p>
+            <div className="bg-dark-700 p-4 rounded-xl text-xs text-slate-500 font-mono mb-8 max-w-md mx-auto">
+              Requested Slug: {params.slug}
+            </div>
+            <Link href="/blog" className="btn-glow px-8 py-3 rounded-xl text-white font-semibold inline-block">
+              Back to all blogs
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
+  
   const primaryCat = post.categories?.[0]?.slug;
   const related    = await getRelated(params.slug, primaryCat);
 

@@ -35,8 +35,16 @@ def build_post_query():
     )
 
 def serialize_post(post: Post) -> dict:
+    data = {c.name: getattr(post, c.name) for c in post.__table__.columns}
+    
+    # Ensure defaults for required schema fields that might be Null in DB
+    data["view_count"] = data.get("view_count") or 0
+    data["is_featured"] = data.get("is_featured") or False
+    data["difficulty"] = data.get("difficulty") or "beginner"
+    data["meta_keywords"] = data.get("meta_keywords") or []
+    
     return {
-        **{c.name: getattr(post, c.name) for c in post.__table__.columns},
+        **data,
         "categories": [pc.category for pc in post.categories if pc.category],
         "tags":       [pt.tag for pt in post.tags if pt.tag],
         "author":     post.author,
@@ -88,14 +96,21 @@ async def featured_posts(limit: int = 6, db: AsyncSession = Depends(get_db)):
 
 @router.get("/{slug}", response_model=PostDetail)
 async def get_post(slug: str, db: AsyncSession = Depends(get_db)):
-    q = build_post_query().where(Post.slug == slug)
-    post = (await db.execute(q)).scalar_one_or_none()
-    if not post:
-        raise HTTPException(404, "Post not found")
-    # Increment view count
-    post.view_count = (post.view_count or 0) + 1
-    await db.commit()
-    return serialize_post(post)
+    try:
+        q = build_post_query().where(Post.slug == slug)
+        post = (await db.execute(q)).scalar_one_or_none()
+        if not post:
+            raise HTTPException(404, "Post not found")
+        
+        # Temporarily disable view count update to debug 500 error
+        # post.view_count = (post.view_count or 0) + 1
+        # await db.commit()
+        
+        return serialize_post(post)
+    except Exception as e:
+        import traceback
+        print(traceback.format_exc())
+        raise HTTPException(500, detail=str(e))
 
 
 @router.post("", response_model=PostDetail, status_code=201)

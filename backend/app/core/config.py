@@ -16,10 +16,10 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
 
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://sfhub:sfhub@localhost:5432/sflearnershub"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:Harshsoni_28@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres"
 
     # CORS
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "https://sflearnershub.com"]
+    CORS_ORIGINS: List[str] = ["*"]
 
     # Media
     UPLOAD_DIR: str = "uploads"

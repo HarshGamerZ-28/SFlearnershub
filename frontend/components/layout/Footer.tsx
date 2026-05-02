@@ -54,7 +54,7 @@ export default function Footer() {
             </div>
             {done ? (
               <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-sm font-semibold whitespace-nowrap">
-                <CheckCircle size={16} /> You're subscribed!
+                <CheckCircle size={16} /> You&apos;re subscribed!
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto">

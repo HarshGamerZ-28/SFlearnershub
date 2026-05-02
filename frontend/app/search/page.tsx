@@ -15,7 +15,7 @@ export default function SearchPage({ searchParams }: { searchParams: { q?: strin
           <h1 className="font-display text-4xl font-extrabold mb-2">
             Search Results
             {searchParams.q && (
-              <> for <span className="gradient-text">"{searchParams.q}"</span></>
+              <> for <span className="gradient-text">&quot;{searchParams.q}&quot;</span></>
             )}
           </h1>
           <p className="text-slate-400 text-sm">Full-text search powered by PostgreSQL GIN indexes</p>
