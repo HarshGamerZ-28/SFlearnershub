@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Zap, Twitter, Youtube, Linkedin, Github, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import { Zap, Twitter, Youtube, Linkedin, Facebook, Mail, ArrowRight, CheckCircle } from "lucide-react";
 
 const FOOTER_LINKS = {
   "Salesforce Platform": [
@@ -43,10 +43,10 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-[rgba(91,114,240,0.12)] bg-dark-800/50 mt-16">
+    <footer className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.12)] bg-slate-50 dark:bg-dark-800/50 mt-16">
       <div className="max-w-7xl mx-auto px-6 py-14">
         {/* Newsletter Section */}
-        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-brand-900/40 to-violet-900/30 border border-[rgba(91,114,240,0.15)]">
+        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-brand-50 to-violet-50 dark:from-brand-900/40 dark:to-violet-900/30 border border-brand-200 dark:border-[rgba(91,114,240,0.15)]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <h3 className="font-display font-semibold text-white mb-1">Stay Updated</h3>
@@ -61,7 +61,7 @@ export default function Footer() {
                 <input
                   type="email" value={email} onChange={e => setEmail(e.target.value)}
                   required placeholder="your@email.com"
-                  className="flex-1 sm:flex-none px-3 py-2 bg-dark-800/60 border border-[rgba(91,114,240,0.25)] rounded-lg text-xs text-white placeholder:text-slate-600 outline-none focus:border-[rgba(91,114,240,0.5)] transition-all"
+                  className="flex-1 sm:flex-none px-3 py-2 bg-white dark:bg-dark-800/60 border border-slate-300 dark:border-[rgba(91,114,240,0.25)] rounded-lg text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none focus:border-brand-400 dark:focus:border-[rgba(91,114,240,0.5)] transition-all"
                 />
                 <button type="submit" disabled={loading}
                   className="btn-glow inline-flex items-center px-4 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-60 whitespace-nowrap">
@@ -85,13 +85,13 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {[
-                { icon: <Twitter size={15} />, href: "#" },
-                { icon: <Youtube size={15} />, href: "#" },
-                { icon: <Linkedin size={15} />, href: "#" },
-                { icon: <Github size={15} />, href: "#" },
+                { icon: <Twitter size={15} />, href: "https://x.com/SFLearnersHub" },
+                { icon: <Youtube size={15} />, href: "https://www.youtube.com/channel/UCYDK82lewStiUKKL3zhxBGg" },
+                { icon: <Linkedin size={15} />, href: "https://www.linkedin.com/company/sflearnershub/" },
+                { icon: <Facebook size={15} />, href: "https://www.facebook.com/people/SF-Learners-Hub/61555359370537/" },
               ].map((s, i) => (
                 <a key={i} href={s.href}
-                  className="w-8 h-8 glass rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all">
+                  className="w-8 h-8 glass rounded-lg flex items-center justify-center text-slate-500 hover:text-slate-800 dark:hover:text-white hover:border-slate-400 dark:hover:border-[rgba(91,114,240,0.4)] transition-all">
                   {s.icon}
                 </a>
               ))}
