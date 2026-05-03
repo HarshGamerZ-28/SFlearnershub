@@ -1,7 +1,7 @@
 // lib/api.ts — Typed API client for SF Learners Hub
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://sflearnershub.onrender.com";
 
 export const api = axios.create({
   baseURL: BASE_URL,
