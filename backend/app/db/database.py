@@ -25,6 +25,7 @@ else:
             "server_settings": {"statement_timeout": "60000"},
             "statement_cache_size": 0,
         }
+        engine_kwargs["prepared_statement_cache_size"] = 0
 
     engine = create_async_engine(
         db_url,
