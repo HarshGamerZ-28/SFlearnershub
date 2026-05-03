@@ -23,7 +23,7 @@ else:
     if ":6543" in db_url or "pooler.supabase" in db_url:
         engine_kwargs["connect_args"] = {
             "server_settings": {"statement_timeout": "60000"},
-            "prepared_statement_cache_size": 0,
+            "statement_cache_size": 0,
         }
 
     engine = create_async_engine(
