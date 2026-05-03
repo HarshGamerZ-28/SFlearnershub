@@ -18,12 +18,21 @@ if db_url.startswith("sqlite") or "aiosqlite" in db_url:
         future=True,
     )
 else:
+    engine_kwargs = {}
+    # If using Supabase Connection Pooler (port 6543), prepared statements MUST be disabled
+    if ":6543" in db_url or "pooler.supabase" in db_url:
+        engine_kwargs["connect_args"] = {
+            "server_settings": {"statement_timeout": "60000"},
+            "prepared_statement_cache_size": 0,
+        }
+
     engine = create_async_engine(
         db_url,
         echo=settings.DEBUG,
         pool_size=10,
         max_overflow=20,
         pool_pre_ping=True,
+        **engine_kwargs
     )
 
 AsyncSessionLocal = sessionmaker(

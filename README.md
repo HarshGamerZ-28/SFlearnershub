@@ -279,7 +279,7 @@ This application is decoupled and optimally deployed using **Supabase** for the 
 Your database is hosted on Supabase.
 **Connection String**:
 ```env
-DATABASE_URL=postgresql://postgres:Harshsoni_28@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres
+DATABASE_URL=postgresql://postgres:password@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres
 ```
 
 ### 2. Backend (Render)
