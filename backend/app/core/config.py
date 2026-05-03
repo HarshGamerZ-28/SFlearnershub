@@ -22,13 +22,23 @@ class Settings(BaseSettings):
 
     @property
     def cors_origins_list(self) -> List[str]:
-        if self.CORS_ORIGINS.startswith("["):
+        raw = self.CORS_ORIGINS.strip()
+        # Handle cases where it's wrapped in brackets like ["a", "b"]
+        if raw.startswith("[") and raw.endswith("]"):
             import json
             try:
-                return json.loads(self.CORS_ORIGINS)
+                return json.loads(raw)
             except Exception:
-                pass
-        return [i.strip() for i in self.CORS_ORIGINS.split(",") if i.strip()]
+                # If JSON fails, strip brackets and try comma split
+                raw = raw[1:-1]
+        
+        # Split by comma and strip quotes/whitespace from each item
+        origins = []
+        for item in raw.split(","):
+            clean_item = item.strip().strip("'").strip('"')
+            if clean_item:
+                origins.append(clean_item)
+        return origins
 
     # Media
     UPLOAD_DIR: str = "uploads"
