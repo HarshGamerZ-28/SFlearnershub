@@ -135,19 +135,20 @@ html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: rgba(91,114,240,0.
 
 /* ── Prose customisation ───────────────────────────────────── */
 .prose h1,.prose h2,.prose h3 { font-family: 'Syne', sans-serif; }
-.prose code { background: rgba(91,114,240,0.12); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
-.prose pre { background: #0d1117 !important; border: 1px solid rgba(91,114,240,0.2); border-radius: 12px; }
+.prose :not(pre) > code { background: rgba(91,114,240,0.12); padding: 2px 6px; border-radius: 4px; font-family: 'JetBrains Mono', monospace; }
+.prose pre { background: #0d1117 !important; border: 1px solid rgba(91,114,240,0.2) !important; border-radius: 12px; }
+.prose pre code { background: transparent !important; padding: 0 !important; color: inherit !important; }
 
 /* Light mode prose */
-html:not(.dark) .prose code { 
+html:not(.dark) .prose :not(pre) > code { 
   background: rgba(91,114,240,0.1) !important; 
   color: #4251e4 !important;
   padding: 2px 6px; 
 }
 html:not(.dark) .prose pre { 
-  background: #f1f5f9 !important; 
-  border: 1px solid #e2e8f0 !important;
-  color: #0f172a;
+  background: #0d1117 !important; 
+  border: 1px solid rgba(91,114,240,0.2) !important;
+  color: #f8fafc !important;
 }
 
 /* ── Light mode specific element overrides ──────────────────  */
