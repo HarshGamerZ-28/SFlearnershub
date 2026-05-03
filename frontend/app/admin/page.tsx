@@ -346,7 +346,7 @@ export default function AdminDashboard() {
 function NewPostForm({ onSuccess }: { onSuccess: () => void }) {
   const [form, setForm] = useState({
     title: "", slug: "", excerpt: "", content: "",
-    youtube_url: "", difficulty: "beginner", status: "published",
+    youtube_url: "", difficulty: "beginner" as "beginner" | "intermediate" | "advanced", status: "published",
     category_slugs: [] as string[], tag_slugs: [] as string[],
   });
   const [saving, setSaving] = useState(false);
