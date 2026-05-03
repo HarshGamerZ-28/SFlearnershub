@@ -5,7 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CategoryPageClient from "@/components/blog/CategoryPageClient";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "https://sflearnershub.onrender.com";
 
 async function getCategory(slug: string) {
   try {

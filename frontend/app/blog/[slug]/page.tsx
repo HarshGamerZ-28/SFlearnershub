@@ -6,7 +6,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogDetailClient from "@/components/blog/BlogDetailClient";
 
-const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API = process.env.NEXT_PUBLIC_API_URL || "https://sflearnershub.onrender.com";
 
 async function getPost(slug: string) {
   const url = `${API}/api/blogs/${slug}`;
