@@ -4,8 +4,6 @@ app/core/config.py — Application configuration via environment variables
 from functools import lru_cache
 from typing import List, Union, Any
 from pydantic_settings import BaseSettings
-from pydantic import field_validator
-
 
 class Settings(BaseSettings):
     # App
@@ -20,14 +18,17 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql+asyncpg://postgres:Harshsoni_28@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres"
 
     # CORS
-    CORS_ORIGINS: List[str] = ["*"]
+    CORS_ORIGINS: str = "*"
 
-    @field_validator("CORS_ORIGINS", mode="before")
-    @classmethod
-    def assemble_cors_origins(cls, v: Any) -> Any:
-        if isinstance(v, str) and not v.startswith("["):
-            return [i.strip() for i in v.split(",") if i.strip()]
-        return v
+    @property
+    def cors_origins_list(self) -> List[str]:
+        if self.CORS_ORIGINS.startswith("["):
+            import json
+            try:
+                return json.loads(self.CORS_ORIGINS)
+            except Exception:
+                pass
+        return [i.strip() for i in self.CORS_ORIGINS.split(",") if i.strip()]
 
     # Media
     UPLOAD_DIR: str = "uploads"
