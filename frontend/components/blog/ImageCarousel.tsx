@@ -6,31 +6,31 @@ import Image from "next/image";
 const CAROUSEL_IMAGES = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
+    src: "/asset/Screenshot_2026-05-02_222643.png",
     alt: "Salesforce Cloud Technology",
     title: "Salesforce Cloud Solutions",
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&h=600&fit=crop",
+    src: "/asset/Screenshot_2026-05-02_222653.png",
     alt: "Professional Development",
     title: "Career Growth & Learning",
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&h=600&fit=crop",
+    src: "/asset/Screenshot_2026-05-02_222702.png",
     alt: "Enterprise Solutions",
     title: "Enterprise Integration",
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop",
+    src: "/asset/Screenshot_2026-05-02_222713.png",
     alt: "Digital Transformation",
     title: "Digital Innovation",
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1516534775068-bb57e70ef14e?w=1200&h=600&fit=crop",
+    src: "/asset/Screenshot_2026-05-02_232616.png",
     alt: "Team Collaboration",
     title: "Team Success",
   },
@@ -92,13 +92,14 @@ export default function ImageCarousel() {
         }}
       >
         {/* Images */}
-        <div className="relative w-full h-full">
+        <div 
+          className="flex w-full h-full transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${current * 100}%)` }}
+        >
           {CAROUSEL_IMAGES.map((image, index) => (
             <div
               key={image.id}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                index === current ? "opacity-100" : "opacity-0"
-              }`}
+              className="w-full h-full flex-shrink-0 relative"
             >
               <Image
                 src={image.src}
