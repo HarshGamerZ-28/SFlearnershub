@@ -3,56 +3,15 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Search, Menu, X, ChevronDown, Zap, BookOpen,
-  Code2, Settings, Link2, GitBranch, GraduationCap,
-  Megaphone, Package, Camera, Moon, Sun
+  Search, Menu, X, ChevronDown, Zap, Moon, Sun
 } from "lucide-react";
 import { useTheme } from "@/lib/theme-provider";
 
-const NAV_CATEGORIES = [
-  {
-    label: "Salesforce Platform",
-    icon: <Zap size={14} />,
-    items: [
-      { name: "Administration",  slug: "salesforce-administration",    icon: <Settings size={13} /> },
-      { name: "Development",     slug: "salesforce-development",        icon: <Code2 size={13} /> },
-      { name: "LWC",             slug: "lightning-web-components-lwc",  icon: <Zap size={13} /> },
-      { name: "DevOps",          slug: "salesforce-deployment-devops",  icon: <GitBranch size={13} /> },
-      { name: "Integration",     slug: "salesforce-integration",        icon: <Link2 size={13} /> },
-    ],
-  },
-  {
-    label: "Study Resources",
-    icon: <GraduationCap size={14} />,
-    items: [
-      { name: "Certification Prep",    slug: "certification-preparation-materials" },
-      { name: "Interview Q&A",         slug: "interview-questions-answers" },
-      { name: "Mock Tests",            slug: "mock-tests-quizzes" },
-      { name: "Real-World Projects",   slug: "real-world-projects" },
-      { name: "Practice Questions",    slug: "practice-questions" },
-    ],
-  },
-  {
-    label: "Products",
-    icon: <Package size={14} />,
-    items: [
-      { name: "Sales Cloud",      slug: "sales-cloud" },
-      { name: "Service Cloud",    slug: "service-cloud" },
-      { name: "Marketing Cloud",  slug: "marketing-cloud" },
-      { name: "Omnistudio",       slug: "salesforce-omnistudio" },
-      { name: "CPQ",              slug: "salesforce-cpq" },
-    ],
-  },
-  {
-    label: "Announcements",
-    icon: <Megaphone size={14} />,
-    items: [
-      { name: "Release Notes",  slug: "salesforce-release-notes" },
-      { name: "Career Paths",   slug: "salesforce-career-paths" },
-      { name: "Events",         slug: "salesforce-events" },
-      { name: "Tools & Tips",   slug: "salesforce-tools-tips" },
-    ],
-  },
+const BLOG_CATEGORIES = [
+  { name: "Salesforce Announcements", slug: "salesforce-announcements" },
+  { name: "Salesforce Platform", slug: "salesforce-platform" },
+  { name: "Salesforce Products Overview", slug: "salesforce-products-overview" },
+  { name: "Salesforce Study Resources", slug: "salesforce-study-resources" },
 ];
 
 export default function Navbar() {
@@ -105,72 +64,49 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          {NAV_CATEGORIES.map((cat) => (
-            <div
-              key={cat.label}
-              className="relative"
-              onMouseEnter={() => setActiveDropdown(cat.label)}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
-                {cat.icon}
-                {cat.label}
-                <ChevronDown
-                  size={13}
-                  className={`transition-transform ${activeDropdown === cat.label ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {activeDropdown === cat.label && (
-                <div className="absolute top-full left-0 mt-1 w-56 glass rounded-xl p-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-[rgba(91,114,240,0.2)] animate-fade-in">
-                  {cat.items.map((item) => (
-                    <Link
-                      key={item.slug}
-                      href={`/category/blog/${item.slug}`}
-                      className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm"
-                    >
-                      {item.icon && <span className="text-brand-400">{item.icon}</span>}
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+          <Link href="/" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+            Home
+          </Link>
 
           <div
             className="relative"
-            onMouseEnter={() => setActiveDropdown("Blogs")}
+            onMouseEnter={() => setActiveDropdown("Blog")}
             onMouseLeave={() => setActiveDropdown(null)}
           >
             <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
-              <BookOpen size={14} />
-              Blogs
+              Blog
               <ChevronDown
                 size={13}
-                className={`transition-transform ${activeDropdown === "Blogs" ? "rotate-180" : ""}`}
+                className={`transition-transform ${activeDropdown === "Blog" ? "rotate-180" : ""}`}
               />
             </button>
 
-            {activeDropdown === "Blogs" && (
-              <div className="absolute top-full left-0 mt-1 w-48 glass rounded-xl p-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-[rgba(91,114,240,0.2)] animate-fade-in">
-                <Link
-                  href="/blog"
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm"
-                >
-                  <BookOpen size={13} className="text-brand-400" />
-                  All Blogs
-                </Link>
-                <Link
-                  href="/gallery"
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm"
-                >
-                  <Camera size={13} className="text-brand-400" />
-                  Gallery
-                </Link>
+            {activeDropdown === "Blog" && (
+              <div className="absolute top-full left-0 mt-1 w-64 glass rounded-xl p-2 shadow-[0_8px_32px_rgba(0,0,0,0.5)] border border-[rgba(91,114,240,0.2)] animate-fade-in">
+                {BLOG_CATEGORIES.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/category/blog/${item.slug}`}
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               </div>
             )}
           </div>
+
+          <Link href="/about" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+            About Us
+          </Link>
+
+          <Link href="/gallery" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+            Gallery
+          </Link>
+
+          <Link href="/contact" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+            Contact Us
+          </Link>
         </nav>
 
         {/* Right actions */}
@@ -243,42 +179,50 @@ export default function Navbar() {
       {open && (
         <div className="lg:hidden border-t border-[rgba(91,114,240,0.15)] bg-dark-800/98 backdrop-blur-xl animate-fade-in">
           <div className="max-h-[70vh] overflow-y-auto px-4 py-4 space-y-1">
-            {NAV_CATEGORIES.map((cat) => (
-              <div key={cat.label}>
-                <div className="px-3 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                  {cat.label}
-                </div>
-                {cat.items.map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/category/blog/${item.slug}`}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            ))}
-            
-            <div className="px-3 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Blogs
-            </div>
             <Link
-              href="/blog"
+              href="/"
               onClick={() => setOpen(false)}
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             >
-              <BookOpen size={13} />
-              All Blogs
+              Home
+            </Link>
+            
+            <div className="px-3 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              Blog
+            </div>
+            {BLOG_CATEGORIES.map((item) => (
+              <Link
+                key={item.slug}
+                href={`/category/blog/${item.slug}`}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 pl-6 pr-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              >
+                {item.name}
+              </Link>
+            ))}
+
+            <div className="h-px bg-white/5 my-2" />
+
+            <Link
+              href="/about"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+            >
+              About Us
             </Link>
             <Link
               href="/gallery"
               onClick={() => setOpen(false)}
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             >
-              <Camera size={13} />
               Gallery
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+            >
+              Contact Us
             </Link>
           </div>
         </div>
