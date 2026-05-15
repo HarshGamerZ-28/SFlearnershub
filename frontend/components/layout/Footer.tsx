@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Zap, Twitter, Youtube, Linkedin, Facebook, Mail, ArrowRight, CheckCircle } from "lucide-react";
 
 const FOOTER_LINKS = {
@@ -75,8 +76,8 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
-                <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
+              <div className="w-14 h-14 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
+                <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" />
               </div>
               <span className="font-display font-bold text-lg gradient-text">SF Learners Hub</span>
             </Link>
