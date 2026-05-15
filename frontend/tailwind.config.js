@@ -43,9 +43,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ["'Syne'", "sans-serif"],
-        body:    ["'DM Sans'", "sans-serif"],
-        mono:    ["'JetBrains Mono'", "monospace"],
+        display: ["var(--font-syne)", "sans-serif"],
+        body:    ["var(--font-dm-sans)", "sans-serif"],
+        mono:    ["var(--font-jetbrains-mono)", "monospace"],
       },
       backgroundImage: {
         "hero-mesh": "radial-gradient(ellipse 80% 80% at 50% -20%, rgba(120,119,198,0.3), transparent), radial-gradient(ellipse 60% 40% at 80% 60%, rgba(91,114,240,0.2), transparent)",

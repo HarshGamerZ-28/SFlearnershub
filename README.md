@@ -290,7 +290,7 @@ DATABASE_URL=postgresql://postgres:password@db.ytieuntfceegfnoghpug.supabase.co:
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 5. Add the following **Environment Variables** in the Render dashboard:
-   - `DATABASE_URL`: `postgresql://postgres:Harshsoni_28@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres`
+   - `DATABASE_URL`: `postgresql://postgres:password@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres`
    - `SECRET_KEY`: `<your_secure_random_string>`
    - `CORS_ORIGINS`: `https://your-vercel-frontend-domain.vercel.app` *(update this after Vercel deployment)*
 6. Click **Deploy**. Render will build and provide a live API URL (e.g., `https://sflearnershub-api.onrender.com`).
