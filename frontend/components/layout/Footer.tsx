@@ -74,11 +74,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-violet-600 flex items-center justify-center">
-                <Zap size={15} className="text-white" />
+            <Link href="/" className="flex items-center gap-3 mb-5">
+              <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
+                <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
               </div>
-              <span className="font-display font-bold text-base gradient-text">SF Learners Hub</span>
+              <span className="font-display font-bold text-lg gradient-text">SF Learners Hub</span>
             </Link>
             <p className="text-slate-500 text-sm leading-relaxed mb-5">
               Your premier Salesforce learning destination. All content migrated from the original WordPress site with full SEO preservation.
