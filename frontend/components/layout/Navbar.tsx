@@ -53,11 +53,11 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-violet-600 flex items-center justify-center">
-            <Zap size={16} className="text-white" />
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          <div className="w-12 h-12 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
+            <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
           </div>
-          <span className="font-display font-bold text-lg gradient-text hidden sm:block">
+          <span className="font-display font-bold text-xl gradient-text hidden sm:block">
             SF Learners Hub
           </span>
         </Link>
