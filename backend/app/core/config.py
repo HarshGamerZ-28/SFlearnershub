@@ -3,6 +3,7 @@ app/core/config.py — Application configuration via environment variables
 """
 from functools import lru_cache
 from typing import List, Union, Any
+from pydantic import field_validator
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -15,7 +16,19 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
 
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:Harshsoni_28@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres"
+    DATABASE_URL: str = ""
+
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def validate_database_url(cls, v: str) -> str:
+        """Validate DATABASE_URL is set and not empty"""
+        if not v or not v.strip():
+            raise ValueError(
+                "DATABASE_URL environment variable is not set. "
+                "Please set it to a valid PostgreSQL connection string. "
+                "Example: postgresql+asyncpg://user:password@host:5432/dbname"
+            )
+        return v
 
     # CORS
     CORS_ORIGINS: str = "*"
