@@ -1,7 +1,9 @@
 // lib/api.ts — Typed API client for SF Learners Hub
 import axios from "axios";
+import { USE_MOCK_DATA } from "./config";
+import { mockPosts, mockCategories, mockAuthor } from "./mockData";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://sflearnershub.onrender.com";
 
 export const api = axios.create({
   baseURL: BASE_URL,
@@ -74,50 +76,232 @@ export interface PaginatedPosts {
 // ─── Blog APIs ───────────────────────────────────────────────────────────────
 
 export const blogApi = {
-  list: (params?: {
+  list: async (params?: {
     page?: number; per_page?: number; category?: string;
     tag?: string; difficulty?: string; featured?: boolean;
-  }) => api.get<PaginatedPosts>("/api/blogs", { params }),
+  }) => {
+    if (USE_MOCK_DATA) {
+      let items = [...mockPosts];
+      if (params?.featured !== undefined) {
+        items = items.filter((p) => p.is_featured === params.featured);
+      }
+      if (params?.category) {
+        items = items.filter((p) => p.categories.some((c) => c.slug === params.category));
+      }
+      if (params?.tag) {
+        items = items.filter((p) => p.tags.some((t) => t.slug === params.tag));
+      }
+      if (params?.difficulty) {
+        items = items.filter((p) => p.difficulty === params.difficulty);
+      }
+      const page = params?.page || 1;
+      const perPage = params?.per_page || 12;
+      const total = items.length;
+      const totalPages = Math.ceil(total / perPage);
+      const sliced = items.slice((page - 1) * perPage, page * perPage);
+      return {
+        data: {
+          items: sliced,
+          total,
+          page,
+          per_page: perPage,
+          total_pages: totalPages,
+        },
+      };
+    }
+    return api.get<PaginatedPosts>("/api/blogs", { params });
+  },
 
-  featured: (limit = 6) => api.get<Post[]>(`/api/blogs/featured?limit=${limit}`),
+  featured: async (limit = 6) => {
+    if (USE_MOCK_DATA) {
+      return { data: mockPosts.filter((p) => p.is_featured).slice(0, limit) };
+    }
+    return api.get<Post[]>(`/api/blogs/featured?limit=${limit}`);
+  },
 
-  bySlug: (slug: string) => api.get<Post>(`/api/blogs/${slug}`),
+  bySlug: async (slug: string) => {
+    if (USE_MOCK_DATA) {
+      const post = mockPosts.find((p) => p.slug === slug);
+      if (!post) throw new Error("Post not found");
+      return { data: post };
+    }
+    return api.get<Post>(`/api/blogs/${slug}`);
+  },
 
-  create: (data: Partial<Post>) => api.post<Post>("/api/blogs", data),
+  create: async (data: Partial<Post>) => {
+    if (USE_MOCK_DATA) {
+      const newPost: Post = {
+        id: `post-${Date.now()}`,
+        title: data.title || "Untitled",
+        slug: data.slug || "untitled",
+        excerpt: data.excerpt,
+        content: data.content || "",
+        difficulty: data.difficulty || "beginner",
+        reading_time: data.reading_time || 5,
+        view_count: 0,
+        is_featured: !!data.is_featured,
+        published_at: new Date().toISOString(),
+        categories: data.categories || [],
+        tags: data.tags || [],
+        author: mockAuthor,
+        featured_image: data.featured_image,
+        youtube_url: data.youtube_url,
+      };
+      mockPosts.unshift(newPost);
+      return { data: newPost };
+    }
+    return api.post<Post>("/api/blogs", data);
+  },
 
-  update: (slug: string, data: Partial<Post>) => api.put<Post>(`/api/blogs/${slug}`, data),
+  update: async (slug: string, data: Partial<Post>) => {
+    if (USE_MOCK_DATA) {
+      const idx = mockPosts.findIndex((p) => p.slug === slug);
+      if (idx === -1) throw new Error("Post not found");
+      mockPosts[idx] = { ...mockPosts[idx], ...data };
+      return { data: mockPosts[idx] };
+    }
+    return api.put<Post>(`/api/blogs/${slug}`, data);
+  },
 
-  delete: (slug: string) => api.delete(`/api/blogs/${slug}`),
+  delete: async (slug: string) => {
+    if (USE_MOCK_DATA) {
+      const idx = mockPosts.findIndex((p) => p.slug === slug);
+      if (idx !== -1) mockPosts.splice(idx, 1);
+      return { data: { success: true } };
+    }
+    return api.delete(`/api/blogs/${slug}`);
+  },
 };
 
 // ─── Category APIs ────────────────────────────────────────────────────────────
 
 export const categoryApi = {
-  list: () => api.get<Category[]>("/api/categories"),
-  bySlug: (slug: string) => api.get<Category>(`/api/categories/${slug}`),
+  list: async () => {
+    if (USE_MOCK_DATA) {
+      return { data: mockCategories };
+    }
+    return api.get<Category[]>("/api/categories");
+  },
+  bySlug: async (slug: string) => {
+    if (USE_MOCK_DATA) {
+      const cat = mockCategories.find((c) => c.slug === slug);
+      if (!cat) throw new Error("Category not found");
+      return { data: cat };
+    }
+    return api.get<Category>(`/api/categories/${slug}`);
+  },
 };
 
 // ─── Search API ───────────────────────────────────────────────────────────────
 
 export const searchApi = {
-  search: (params: {
+  search: async (params: {
     q?: string; category?: string; tag?: string;
     difficulty?: string; page?: number; per_page?: number;
-  }) => api.get<PaginatedPosts>("/api/search", { params }),
+  }) => {
+    if (USE_MOCK_DATA) {
+      let items = [...mockPosts];
+      if (params.q) {
+        const query = params.q.toLowerCase();
+        items = items.filter(
+          (p) =>
+            p.title.toLowerCase().includes(query) ||
+            (p.excerpt && p.excerpt.toLowerCase().includes(query)) ||
+            (p.content && p.content.toLowerCase().includes(query))
+        );
+      }
+      if (params.category) {
+        items = items.filter((p) => p.categories.some((c) => c.slug === params.category));
+      }
+      if (params.tag) {
+        items = items.filter((p) => p.tags.some((t) => t.slug === params.tag));
+      }
+      if (params.difficulty) {
+        items = items.filter((p) => p.difficulty === params.difficulty);
+      }
+      const page = params.page || 1;
+      const perPage = params.per_page || 12;
+      const total = items.length;
+      const totalPages = Math.ceil(total / perPage);
+      const sliced = items.slice((page - 1) * perPage, page * perPage);
+      return {
+        data: {
+          items: sliced,
+          total,
+          page,
+          per_page: perPage,
+          total_pages: totalPages,
+        },
+      };
+    }
+    return api.get<PaginatedPosts>("/api/search", { params });
+  },
 };
 
 // ─── Auth APIs ────────────────────────────────────────────────────────────────
 
 export const authApi = {
-  login: (email: string, password: string) =>
-    api.post("/api/auth/login", { email, password }),
-  register: (data: { email: string; username: string; password: string; full_name?: string }) =>
-    api.post("/api/auth/register", data),
+  login: async (email: string, password: string) => {
+    if (USE_MOCK_DATA) {
+      // Mock admin: accept any credentials, or check against env vars
+      return {
+        data: {
+          access_token: "mock-jwt-access-token",
+          refresh_token: "mock-jwt-refresh-token",
+          user: mockAuthor,
+        },
+      };
+    }
+    return api.post("/api/auth/login", { email, password });
+  },
+  register: async (data: { email: string; username: string; password: string; full_name?: string }) => {
+    if (USE_MOCK_DATA) {
+      return {
+        data: {
+          access_token: "mock-jwt-access-token",
+          refresh_token: "mock-jwt-refresh-token",
+          user: { ...mockAuthor, username: data.username, full_name: data.full_name },
+        },
+      };
+    }
+    return api.post("/api/auth/register", data);
+  },
 };
 
 // ─── Admin APIs ───────────────────────────────────────────────────────────────
 
 export const adminApi = {
-  stats:  () => api.get("/api/admin/stats"),
-  posts:  (page = 1) => api.get(`/api/admin/posts?page=${page}`),
+  stats: async () => {
+    if (USE_MOCK_DATA) {
+      const published = mockPosts.length;
+      return {
+        data: {
+          published_posts: published,
+          draft_posts: 0,
+          categories: mockCategories.length,
+          tags: 8,
+          total_views: mockPosts.reduce((acc, p) => acc + p.view_count, 0),
+        },
+      };
+    }
+    return api.get("/api/admin/stats");
+  },
+  posts: async (page = 1) => {
+    if (USE_MOCK_DATA) {
+      const perPage = 10;
+      const total = mockPosts.length;
+      const sliced = mockPosts.slice((page - 1) * perPage, page * perPage);
+      return {
+        data: {
+          items: sliced,
+          total,
+          page,
+          per_page: perPage,
+          total_pages: Math.ceil(total / perPage),
+        },
+      };
+    }
+    return api.get(`/api/admin/posts?page=${page}`);
+  },
 };
+

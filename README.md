@@ -61,7 +61,6 @@ sflearnershub/
 │   │       └── schemas.py             # Pydantic request/response
 │   ├── migrations/
 │   │   └── 001_initial_schema.sql     # Full schema + category seeds
-│   ├── Dockerfile
 │   ├── requirements.txt
 │   └── .env.example
 │
@@ -96,13 +95,12 @@ sflearnershub/
 │   │   └── globals.css                # Design tokens + animations
 │   ├── tailwind.config.js             # Full design system
 │   ├── next.config.js
-│   ├── Dockerfile
+│   ├── package.json
 │   └── .env.example
 │
 ├── migration_scripts/
 │   └── wp_to_postgres.py              # Full WordPress XML → PostgreSQL migrator
 │
-├── docker-compose.yml                 # Dev stack: PG + API + Next.js
 └── README.md
 ```
 
@@ -273,25 +271,38 @@ Migration output:
 
 ---
 
-## 📦 Production Deployment
+## 📦 Production Deployment Roadmap
 
-### Vercel (Frontend)
-```bash
-cd frontend
-vercel deploy --prod
-# Set env: NEXT_PUBLIC_API_URL=https://api.sflearnershub.com
-```
+This application is decoupled and optimally deployed using **Supabase** for the database, **Render** for the Python backend, and **Vercel** for the Next.js frontend.
 
-### Render / Railway (Backend)
-```bash
-# Set env vars: DATABASE_URL, SECRET_KEY, CORS_ORIGINS
-# Build command: pip install -r requirements.txt
-# Start command: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+### 1. Database (Supabase PostgreSQL)
+Your database is hosted on Supabase.
+**Connection String**:
+```env
+DATABASE_URL=postgresql://postgres:password@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres
 ```
 
-### Supabase / Neon (PostgreSQL)
-```
-Connection string → DATABASE_URL in backend .env
-Run migrations/001_initial_schema.sql once
-Then run migration_scripts/wp_to_postgres.py
-```
+### 2. Backend (Render)
+1. Create a new **Web Service** on [Render](https://render.com).
+2. Connect your GitHub repository and select the `backend` directory as the Root Directory.
+3. Set the Environment to **Python**.
+4. Configure the build and start commands:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Add the following **Environment Variables** in the Render dashboard:
+   - `DATABASE_URL`: `postgresql://postgres:password@db.ytieuntfceegfnoghpug.supabase.co:5432/postgres`
+   - `SECRET_KEY`: `<your_secure_random_string>`
+   - `CORS_ORIGINS`: `https://your-vercel-frontend-domain.vercel.app` *(update this after Vercel deployment)*
+6. Click **Deploy**. Render will build and provide a live API URL (e.g., `https://sflearnershub-api.onrender.com`).
+
+### 3. Frontend (Vercel)
+1. Log in to [Vercel](https://vercel.com) and click **Add New Project**.
+2. Import your GitHub repository.
+3. **Important**: Under "Root Directory", click Edit and select the `frontend` folder.
+4. The framework preset will automatically detect **Next.js**.
+5. Add the following **Environment Variable**:
+   - `NEXT_PUBLIC_API_URL`: `<YOUR_RENDER_BACKEND_URL>` *(e.g., `https://sflearnershub-api.onrender.com`)*
+6. Click **Deploy**. Vercel will build and host your Next.js application globally.
+
+### Final Verification
+Once Vercel deploys, copy your new Vercel domain (e.g., `https://sflearnershub.vercel.app`) and update the `CORS_ORIGINS` environment variable in your Render backend settings so the frontend is authorized to make API calls!

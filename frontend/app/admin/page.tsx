@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard, FileText, FolderOpen, Tag, Image as ImageIcon,
@@ -37,25 +37,14 @@ export default function AdminDashboard() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("sf_access_token");
-    if (!token) { router.push("/auth/login"); return; }
-    loadStats();
-    loadPosts();
-  }, []);
-
-  useEffect(() => {
-    if (view === "posts") loadPosts();
-  }, [page, view]);
-
-  const loadStats = async () => {
+  const loadStats = useCallback(async () => {
     try {
       const r = await adminApi.stats();
       setStats(r.data);
     } catch { showToast("Failed to load stats", "error"); }
-  };
+  }, []);
 
-  const loadPosts = async () => {
+  const loadPosts = useCallback(async () => {
     setLoading(true);
     try {
       const r = await adminApi.posts(page);
@@ -64,7 +53,18 @@ export default function AdminDashboard() {
       setPages(r.data.total_pages || 1);
     } catch { showToast("Failed to load posts", "error"); }
     finally { setLoading(false); }
-  };
+  }, [page]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("sf_access_token");
+    if (!token) { router.push("/auth/login"); return; }
+    loadStats();
+    loadPosts();
+  }, [router, loadStats, loadPosts]);
+
+  useEffect(() => {
+    if (view === "posts") loadPosts();
+  }, [page, view, loadPosts]);
 
   const handleDelete = async (slug: string, title: string) => {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
@@ -346,7 +346,7 @@ export default function AdminDashboard() {
 function NewPostForm({ onSuccess }: { onSuccess: () => void }) {
   const [form, setForm] = useState({
     title: "", slug: "", excerpt: "", content: "",
-    youtube_url: "", difficulty: "beginner", status: "published",
+    youtube_url: "", difficulty: "beginner" as "beginner" | "intermediate" | "advanced", status: "published",
     category_slugs: [] as string[], tag_slugs: [] as string[],
   });
   const [saving, setSaving] = useState(false);

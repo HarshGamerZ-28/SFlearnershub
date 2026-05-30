@@ -38,27 +38,28 @@ export default function BlogCard({ post, featured = false }: Props) {
         className={clsx(
           "relative overflow-hidden bg-gradient-to-br from-brand-900/40 to-violet-900/20",
           featured ? "w-full lg:w-2/5 h-48 sm:h-64 lg:h-auto min-h-[200px]" : "h-44"
+          "relative overflow-hidden bg-slate-800",
+          featured ? "lg:w-2/5 min-h-[200px]" : "h-52 sm:h-64 lg:h-48"
         )}
       >
-        {post.featured_image ? (
-          <Image
-            src={post.featured_image.startsWith('http') ? post.featured_image : `https://sflearnershub.com${post.featured_image}`}
-            alt={post.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            sizes="(max-width:768px) 100vw, 400px"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-brand-500/20 to-violet-500/20 border border-brand-500/20 flex items-center justify-center">
-              <Tag size={24} className="text-brand-400" />
-            </div>
-          </div>
-        )}
-
+        <Image
+          src={
+            post.featured_image && post.featured_image.length > 5
+              ? post.featured_image.startsWith('http') 
+                ? post.featured_image 
+                : `https://sflearnershub.com${post.featured_image.startsWith('/') ? '' : '/'}${post.featured_image}`
+              : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
+          }
+          alt={post.title || "Blog Post"}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={featured}
+        />
+        
         {/* Overlay badges */}
-        <div className="absolute top-3 left-3 flex gap-2">
-          <span className={clsx("text-xs font-semibold px-2 py-1 rounded-md font-mono", DIFFICULTY_STYLES[post.difficulty])}>
+        <div className="absolute top-3 left-3 z-10 flex gap-2">
+          <span className={clsx("text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-dark-900/80 backdrop-blur-md border border-white/10 text-white shadow-sm", DIFFICULTY_STYLES[post.difficulty])}>
             {DIFFICULTY_LABELS[post.difficulty]}
           </span>
         </div>

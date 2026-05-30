@@ -48,12 +48,14 @@ export default function GalleryPage() {
                 className="group relative aspect-[4/3] rounded-3xl overflow-hidden border border-white/10 glass animate-fade-up"
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
-                <img 
+                <Image 
                   src={img.url} 
                   alt={img.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6 z-10">
                   <span className="text-white font-display font-bold text-lg">{img.title}</span>
                 </div>
               </div>

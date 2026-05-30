@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Zap, BookOpen, Users, Star } from "lucide-react";
+import { ArrowRight, Zap, BookOpen, Users, Star, Play, Pause, Volume2, VolumeX, RotateCcw, RotateCw, Maximize } from "lucide-react";
 
 const STATS = [
   { value: "842+", label: "Blog Posts", icon: <BookOpen size={16} /> },
@@ -19,6 +19,11 @@ const TAGS = [
 export default function HeroSection() {
   const [tagIndex, setTagIndex] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout>();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -26,6 +31,57 @@ export default function HeroSection() {
     }, 2000);
     return () => clearInterval(intervalRef.current!);
   }, []);
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const skip = (seconds: number) => {
+    if (videoRef.current) {
+      videoRef.current.currentTime += seconds;
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (videoRef.current) {
+      if (videoRef.current.requestFullscreen) {
+        videoRef.current.requestFullscreen();
+      } else if ((videoRef.current as any).webkitRequestFullscreen) {
+        (videoRef.current as any).webkitRequestFullscreen();
+      } else if ((videoRef.current as any).msRequestFullscreen) {
+        (videoRef.current as any).msRequestFullscreen();
+      }
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const currentProgress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      setProgress(currentProgress);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (videoRef.current) {
+      const time = (parseFloat(e.target.value) / 100) * videoRef.current.duration;
+      videoRef.current.currentTime = time;
+      setProgress(parseFloat(e.target.value));
+    }
+  };
 
   return (
     <section className="relative overflow-hidden pt-12 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6">
@@ -67,14 +123,59 @@ export default function HeroSection() {
 
         {/* Home Video */}
         <div className="max-w-4xl mx-auto mb-10 sm:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
+        {/* Home Video with Controls */}
+        <div className="group relative max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
           <video 
+            ref={videoRef}
             src="https://sflearnershub.com/wp-content/uploads/2026/01/m3raee3zxxrmr0cvga08nyg05m_result_.mp4" 
             autoPlay 
             loop 
-            muted 
+            muted={isMuted}
             playsInline 
+            onTimeUpdate={handleTimeUpdate}
             className="w-full h-auto object-cover"
           />
+          
+          {/* Custom Controls Overlay */}
+          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+            <div className="flex flex-col gap-4">
+              {/* Progress Line */}
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={progress}
+                onChange={handleSeek}
+                className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-brand-400"
+              />
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <button onClick={togglePlay} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                    {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
+                  </button>
+                  
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => skip(-10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                      <RotateCcw size={20} />
+                    </button>
+                    <button onClick={() => skip(10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                      <RotateCw size={20} />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <button onClick={toggleMute} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                  </button>
+                  <button onClick={toggleFullscreen} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                    <Maximize size={20} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* CTA Buttons */}

@@ -6,6 +6,11 @@ import sqlalchemy
 
 # Create engine with different options for SQLite vs other DBs
 db_url = settings.DATABASE_URL
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+elif db_url.startswith("postgresql://"):
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
 if db_url.startswith("sqlite") or "aiosqlite" in db_url:
     engine = create_async_engine(
         db_url,
@@ -13,12 +18,22 @@ if db_url.startswith("sqlite") or "aiosqlite" in db_url:
         future=True,
     )
 else:
+    engine_kwargs = {}
+    # If using Supabase Connection Pooler (port 6543), prepared statements MUST be disabled
+    if ":6543" in db_url or "pooler.supabase" in db_url:
+        engine_kwargs["connect_args"] = {
+            "server_settings": {"statement_timeout": "60000"},
+            "statement_cache_size": 0,
+        }
+        db_url += "?prepared_statement_cache_size=0" if "?" not in db_url else "&prepared_statement_cache_size=0"
+
     engine = create_async_engine(
         db_url,
         echo=settings.DEBUG,
         pool_size=10,
         max_overflow=20,
         pool_pre_ping=True,
+        **engine_kwargs
     )
 
 AsyncSessionLocal = sessionmaker(

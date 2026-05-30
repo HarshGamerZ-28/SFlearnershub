@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   Search, Menu, X, ChevronDown, Zap, Moon, Sun
@@ -8,10 +9,13 @@ import {
 import { useTheme } from "@/lib/theme-provider";
 
 const BLOG_CATEGORIES = [
-  { name: "Salesforce Announcements", slug: "salesforce-announcements" },
-  { name: "Salesforce Platform", slug: "salesforce-platform" },
-  { name: "Salesforce Products Overview", slug: "salesforce-products-overview" },
-  { name: "Salesforce Study Resources", slug: "salesforce-study-resources" },
+  { name: "Administration",      slug: "salesforce-administration" },
+  { name: "Development",         slug: "salesforce-development" },
+  { name: "Lightning Web Components", slug: "lightning-web-components-lwc" },
+  { name: "Certification Prep",  slug: "certification-preparation-materials" },
+  { name: "Interview Q&A",       slug: "interview-questions-answers" },
+  { name: "Salesforce DevOps",   slug: "salesforce-deployment-devops" },
+  { name: "Salesforce Integration", slug: "salesforce-integration" },
 ];
 
 export default function Navbar() {
@@ -56,6 +60,9 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="w-10 sm:w-12 h-10 sm:h-12 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
             <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
+        <Link href="/" className="flex items-center gap-3 shrink-0">
+          <div className="w-12 h-12 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
+            <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" />
           </div>
           <span className="font-display font-bold text-lg sm:text-xl gradient-text hidden sm:block">
             SF Learners Hub

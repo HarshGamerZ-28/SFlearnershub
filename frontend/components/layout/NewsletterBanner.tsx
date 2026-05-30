@@ -38,7 +38,7 @@ export default function NewsletterBanner() {
 
           {done ? (
             <div className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 font-semibold">
-              <CheckCircle size={18} /> You're subscribed!
+              <CheckCircle size={18} /> You&apos;re subscribed!
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">

@@ -3,14 +3,29 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/layout/HeroSection";
 import ImageCarousel from "@/components/blog/ImageCarousel";
+import CategoryGrid from "@/components/blog/CategoryGrid";
+import FeaturedBlogs from "@/components/blog/FeaturedBlogs";
 
 export default function HomePage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="space-y-16 pb-20">
         <HeroSection />
-        <section className="py-12">
+        
+        {/* Category Grid Section */}
+        <section className="max-w-7xl mx-auto px-6 relative">
+          <CategoryGrid />
+        </section>
+
+        {/* Featured Blogs Section */}
+        <section className="max-w-7xl mx-auto px-6 relative">
+          <FeaturedBlogs />
+        </section>
+
+        {/* Image Carousel / Branding Section */}
+        <section className="relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-950/10 to-transparent pointer-events-none" />
           <ImageCarousel />
         </section>
       </main>
@@ -18,3 +33,4 @@ export default function HomePage() {
     </>
   );
 }
+

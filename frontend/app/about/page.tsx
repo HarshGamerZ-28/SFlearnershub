@@ -1,5 +1,6 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Image from "next/image";
 import { Metadata } from "next";
 import { Zap } from "lucide-react";
 
@@ -18,8 +19,8 @@ export default function AboutPage() {
         
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="mb-12 text-center">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden shadow-lg shadow-brand-500/25 border border-[rgba(91,114,240,0.2)] flex items-center justify-center shrink-0">
-              <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
+            <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden relative shadow-lg shadow-brand-500/25 border border-[rgba(91,114,240,0.2)]">
+              <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" />
             </div>
             <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
               <span className="gradient-text">About Us</span>
@@ -43,7 +44,7 @@ export default function AboutPage() {
             <h2 className="font-display text-2xl font-bold text-white pt-6 pb-2">What We Do : Salesforce Learners</h2>
             
             <p>
-              Salesforce is the world's #1 customer relationship management (CRM) platform. Salesforce help your marketing, sales, commerce, service and IT teams work as one from anywhere — so you can keep your customers happy everywhere.
+              Salesforce is the world&apos;s #1 customer relationship management (CRM) platform. Salesforce help your marketing, sales, commerce, service and IT teams work as one from anywhere — so you can keep your customers happy everywhere.
             </p>
             <p>
               Our team of seasoned Salesforce professionals and trainers is committed to providing you with high-quality, up-to-date content. We understand that learning Salesforce can be a transformative journey, and we are here to guide you every step of the way.
@@ -52,7 +53,7 @@ export default function AboutPage() {
               Join our vibrant community of Salesforce enthusiasts, connect with fellow learners, and stay updated with the latest industry trends and Salesforce innovations.
             </p>
             <p className="text-brand-400 font-medium pt-4">
-              Let's embark on this exciting journey together, and unlock the endless possibilities that Salesforce has to offer. Welcome to Salesforce Learners!
+              Let&apos;s embark on this exciting journey together, and unlock the endless possibilities that Salesforce has to offer. Welcome to Salesforce Learners!
             </p>
           </div>
         </div>

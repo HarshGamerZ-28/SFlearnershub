@@ -22,7 +22,7 @@ export default function ContactPage() {
               <span className="gradient-text">Contact Us</span>
             </h1>
             <p className="text-lg text-slate-400 font-medium">
-              We'd love to hear from you. Get in touch with us using the details below.
+              We&apos;d love to hear from you. Get in touch with us using the details below.
             </p>
           </div>
 

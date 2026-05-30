@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Zap, Twitter, Youtube, Linkedin, Facebook, Mail, ArrowRight, CheckCircle } from "lucide-react";
 
 const FOOTER_LINKS = {
@@ -55,6 +56,8 @@ export default function Footer() {
             {done ? (
               <div className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold w-fit">
                 <CheckCircle size={16} /> You're subscribed!
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-sm font-semibold whitespace-nowrap">
+                <CheckCircle size={16} /> You&apos;re subscribed!
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full">
@@ -77,11 +80,16 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
               <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
                 <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
+            <Link href="/" className="flex items-center gap-3 mb-5">
+              <div className="w-14 h-14 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
+                <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" />
               </div>
               <span className="font-display font-bold text-base sm:text-lg gradient-text">SF Learners Hub</span>
             </Link>
             <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
               Your premier Salesforce learning destination. All content migrated from the original WordPress site with full SEO preservation.
+            <p className="text-slate-500 text-sm leading-relaxed mb-5">
+              Empowering Salesforce professionals with in-depth tutorials, certification resources, and real-world guides — from Admin fundamentals to advanced Apex development.
             </p>
             <div className="flex gap-2 sm:gap-3">
               {[
