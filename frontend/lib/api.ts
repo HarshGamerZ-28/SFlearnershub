@@ -243,13 +243,26 @@ export const searchApi = {
 export const authApi = {
   login: async (email: string, password: string) => {
     if (USE_MOCK_DATA) {
-      return { data: { token: "mock-jwt-token", user: mockAuthor } };
+      // Mock admin: accept any credentials, or check against env vars
+      return {
+        data: {
+          access_token: "mock-jwt-access-token",
+          refresh_token: "mock-jwt-refresh-token",
+          user: mockAuthor,
+        },
+      };
     }
     return api.post("/api/auth/login", { email, password });
   },
   register: async (data: { email: string; username: string; password: string; full_name?: string }) => {
     if (USE_MOCK_DATA) {
-      return { data: { token: "mock-jwt-token", user: { ...mockAuthor, username: data.username, full_name: data.full_name } } };
+      return {
+        data: {
+          access_token: "mock-jwt-access-token",
+          refresh_token: "mock-jwt-refresh-token",
+          user: { ...mockAuthor, username: data.username, full_name: data.full_name },
+        },
+      };
     }
     return api.post("/api/auth/register", data);
   },
@@ -260,10 +273,13 @@ export const authApi = {
 export const adminApi = {
   stats: async () => {
     if (USE_MOCK_DATA) {
+      const published = mockPosts.length;
       return {
         data: {
-          total_posts: mockPosts.length,
-          total_categories: mockCategories.length,
+          published_posts: published,
+          draft_posts: 0,
+          categories: mockCategories.length,
+          tags: 8,
           total_views: mockPosts.reduce((acc, p) => acc + p.view_count, 0),
         },
       };

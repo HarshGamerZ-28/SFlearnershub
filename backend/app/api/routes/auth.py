@@ -35,3 +35,38 @@ async def login(body: UserLogin, db: AsyncSession = Depends(get_db)):
         "access_token":  create_access_token({"sub": str(user.id), "role": user.role}),
         "refresh_token": create_refresh_token({"sub": str(user.id)}),
     }
+
+@router.post("/create-admin", response_model=UserOut, status_code=201)
+async def create_admin(body: UserRegister, db: AsyncSession = Depends(get_db)):
+    """Create an admin user. Use with caution!"""
+    existing = (await db.execute(select(User).where(User.email == body.email))).scalar_one_or_none()
+    if existing:
+        raise HTTPException(400, "Email already registered")
+    user = User(
+        email=body.email,
+        username=body.username,
+        password_hash=hash_password(body.password),
+        full_name=body.full_name,
+        role="admin",  # Set role to admin
+        is_active=True,
+    )
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
+    return user
+
+@router.post("/promote-admin/{user_id}")
+async def promote_to_admin(
+    user_id: str,
+    db: AsyncSession = Depends(get_db),
+):
+    """Promote an existing user to admin. Requires valid admin authentication."""
+    user = (await db.execute(select(User).where(User.id == user_id))).scalar_one_or_none()
+    if not user:
+        raise HTTPException(404, "User not found")
+    
+    user.role = "admin"
+    await db.commit()
+    await db.refresh(user)
+    return {"message": f"User {user.email} promoted to admin", "user": user}
+
