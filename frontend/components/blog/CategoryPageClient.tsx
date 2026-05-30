@@ -28,8 +28,8 @@ export default function CategoryPageClient({ category }: Props) {
   return (
     <div>
       {/* Header */}
-      <div className="mb-10">
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
+      <div className="mb-8 sm:mb-10">
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 mb-3 sm:mb-4 flex-wrap">
           <Link href="/" className="hover:text-slate-300 transition-colors">Home</Link>
           <span>/</span>
           <Link href="/blog" className="hover:text-slate-300 transition-colors">Blog</Link>
@@ -37,33 +37,33 @@ export default function CategoryPageClient({ category }: Props) {
           <span className="text-slate-300">{category.name}</span>
         </div>
 
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-3 sm:gap-4">
           <div
-            className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0"
+            className="w-12 sm:w-14 h-12 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center text-xl sm:text-2xl shrink-0"
             style={{ background: `${category.color}20`, border: `1px solid ${category.color}40` }}
           >
             <Layers size={24} style={{ color: category.color }} />
           </div>
           <div>
-            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-2">{category.name}</h1>
+            <h1 className="font-display text-xl sm:text-2xl md:text-4xl font-extrabold text-white mb-1 sm:mb-2">{category.name}</h1>
             {category.description && (
-              <p className="text-slate-400 text-lg">{category.description}</p>
+              <p className="text-slate-400 text-sm sm:text-base">{category.description}</p>
             )}
-            <p className="text-slate-500 text-sm mt-1">{total} articles</p>
+            <p className="text-slate-500 text-xs sm:text-sm mt-1">{total} articles</p>
           </div>
         </div>
       </div>
 
       {/* Sub-categories */}
       {category.children && category.children.length > 0 && (
-        <div className="mb-8">
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Sub-categories</p>
-          <div className="flex flex-wrap gap-3">
+        <div className="mb-6 sm:mb-8">
+          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 sm:mb-3">Sub-categories</p>
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {category.children.map((child) => (
               <Link
                 key={child.id}
                 href={`/category/blog/${child.slug}`}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm text-slate-300 hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all"
+                className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl glass text-xs sm:text-sm text-slate-300 hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all"
               >
                 {child.name}
                 <ArrowRight size={13} className="text-slate-500" />
@@ -75,9 +75,9 @@ export default function CategoryPageClient({ category }: Props) {
 
       {/* Post grid */}
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="skeleton h-72 rounded-2xl" />
+            <div key={i} className="skeleton h-72 rounded-xl sm:rounded-2xl" />
           ))}
         </div>
       ) : posts.length === 0 ? (

@@ -43,47 +43,47 @@ export default function Footer() {
   };
 
   return (
-    <footer className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.12)] bg-slate-50 dark:bg-dark-800/50 mt-16">
-      <div className="max-w-7xl mx-auto px-6 py-14">
+    <footer className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.12)] bg-slate-50 dark:bg-dark-800/50 mt-12 sm:mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
         {/* Newsletter Section */}
-        <div className="mb-12 p-6 rounded-2xl bg-gradient-to-r from-brand-50 to-violet-50 dark:from-brand-900/40 dark:to-violet-900/30 border border-brand-200 dark:border-[rgba(91,114,240,0.15)]">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="mb-8 sm:mb-12 p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-brand-50 to-violet-50 dark:from-brand-900/40 dark:to-violet-900/30 border border-brand-200 dark:border-[rgba(91,114,240,0.15)]">
+          <div className="flex flex-col gap-4 sm:gap-4">
             <div>
-              <h3 className="font-display font-semibold text-white mb-1">Stay Updated</h3>
-              <p className="text-sm text-slate-400">Get the latest Salesforce insights delivered to your inbox.</p>
+              <h3 className="font-display font-semibold text-base sm:text-lg text-white mb-1">Stay Updated</h3>
+              <p className="text-xs sm:text-sm text-slate-400">Get the latest Salesforce insights delivered to your inbox.</p>
             </div>
             {done ? (
-              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-sm font-semibold whitespace-nowrap">
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold w-fit">
                 <CheckCircle size={16} /> You're subscribed!
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex gap-2 w-full sm:w-auto">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full">
                 <input
                   type="email" value={email} onChange={e => setEmail(e.target.value)}
                   required placeholder="your@email.com"
-                  className="flex-1 sm:flex-none px-3 py-2 bg-white dark:bg-dark-800/60 border border-slate-300 dark:border-[rgba(91,114,240,0.25)] rounded-lg text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none focus:border-brand-400 dark:focus:border-[rgba(91,114,240,0.5)] transition-all"
+                  className="flex-1 px-3 py-2 bg-white dark:bg-dark-800/60 border border-slate-300 dark:border-[rgba(91,114,240,0.25)] rounded-lg text-xs text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none focus:border-brand-400 dark:focus:border-[rgba(91,114,240,0.5)] transition-all"
                 />
                 <button type="submit" disabled={loading}
-                  className="btn-glow inline-flex items-center px-4 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-60 whitespace-nowrap">
+                  className="btn-glow inline-flex items-center justify-center px-3 sm:px-4 py-2 rounded-lg text-xs font-semibold text-white disabled:opacity-60 whitespace-nowrap">
                   {loading ? "Subscribing…" : <><span>Subscribe</span> <ArrowRight size={12} className="ml-1" /></>}
                 </button>
               </form>
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-10 mb-8 sm:mb-10">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
+              <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-full overflow-hidden flex items-center justify-center shrink-0 shadow-sm shadow-brand-500/20">
                 <img src="/logo.jpg" alt="SF Learners Hub" className="w-full h-full object-cover scale-[1.18]" />
               </div>
-              <span className="font-display font-bold text-lg gradient-text">SF Learners Hub</span>
+              <span className="font-display font-bold text-base sm:text-lg gradient-text">SF Learners Hub</span>
             </Link>
-            <p className="text-slate-500 text-sm leading-relaxed mb-5">
+            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
               Your premier Salesforce learning destination. All content migrated from the original WordPress site with full SEO preservation.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2 sm:gap-3">
               {[
                 { icon: <Twitter size={15} />, href: "https://x.com/SFLearnersHub" },
                 { icon: <Youtube size={15} />, href: "https://www.youtube.com/channel/UCYDK82lewStiUKKL3zhxBGg" },
@@ -101,11 +101,11 @@ export default function Footer() {
           {/* Links */}
           {Object.entries(FOOTER_LINKS).map(([section, links]) => (
             <div key={section}>
-              <h3 className="font-display font-semibold text-sm text-white mb-4">{section}</h3>
-              <ul className="space-y-2">
+              <h3 className="font-display font-semibold text-xs sm:text-sm text-white mb-3 sm:mb-4">{section}</h3>
+              <ul className="space-y-1.5 sm:space-y-2">
                 {links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-sm text-slate-500 hover:text-slate-200 transition-colors">
+                    <Link href={link.href} className="text-xs sm:text-sm text-slate-500 hover:text-slate-200 transition-colors">
                       {link.label}
                     </Link>
                   </li>
@@ -115,7 +115,7 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="border-t border-[rgba(91,114,240,0.08)] pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-600">
+        <div className="border-t border-[rgba(91,114,240,0.08)] pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3 text-xs text-slate-600">
           <p>© {new Date().getFullYear()} SF Learners Hub. All rights reserved.</p>
         </div>
       </div>
