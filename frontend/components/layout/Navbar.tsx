@@ -9,10 +9,13 @@ import {
 import { useTheme } from "@/lib/theme-provider";
 
 const BLOG_CATEGORIES = [
-  { name: "Salesforce Announcements", slug: "salesforce-announcements" },
-  { name: "Salesforce Platform", slug: "salesforce-platform" },
-  { name: "Salesforce Products Overview", slug: "salesforce-products-overview" },
-  { name: "Salesforce Study Resources", slug: "salesforce-study-resources" },
+  { name: "Administration",      slug: "salesforce-administration" },
+  { name: "Development",         slug: "salesforce-development" },
+  { name: "Lightning Web Components", slug: "lightning-web-components-lwc" },
+  { name: "Certification Prep",  slug: "certification-preparation-materials" },
+  { name: "Interview Q&A",       slug: "interview-questions-answers" },
+  { name: "Salesforce DevOps",   slug: "salesforce-deployment-devops" },
+  { name: "Salesforce Integration", slug: "salesforce-integration" },
 ];
 
 export default function Navbar() {

@@ -82,7 +82,7 @@ export default function Footer() {
               <span className="font-display font-bold text-lg gradient-text">SF Learners Hub</span>
             </Link>
             <p className="text-slate-500 text-sm leading-relaxed mb-5">
-              Your premier Salesforce learning destination. All content migrated from the original WordPress site with full SEO preservation.
+              Empowering Salesforce professionals with in-depth tutorials, certification resources, and real-world guides — from Admin fundamentals to advanced Apex development.
             </p>
             <div className="flex gap-3">
               {[

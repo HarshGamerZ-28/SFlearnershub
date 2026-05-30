@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Layers, ArrowRight } from "lucide-react";
 import BlogCard from "@/components/blog/BlogCard";
 import { blogApi, type Post, type Category } from "@/lib/api";
+import { USE_MOCK_DATA } from "@/lib/config";
+import { mockPosts } from "@/lib/mockData";
 
 interface Props { category: Category }
 
@@ -16,6 +18,19 @@ export default function CategoryPageClient({ category }: Props) {
 
   useEffect(() => {
     setLoading(true);
+
+    if (USE_MOCK_DATA) {
+      // Filter mock posts by this category's slug
+      const filtered = mockPosts.filter((p) =>
+        p.categories.some((c) => c.slug === category.slug)
+      );
+      setPosts(filtered.slice((page - 1) * 12, page * 12));
+      setTotal(filtered.length);
+      setPages(Math.max(1, Math.ceil(filtered.length / 12)));
+      setLoading(false);
+      return;
+    }
+
     blogApi.list({ category: category.slug, page, per_page: 12 })
       .then((r) => {
         setPosts(r.data.items);
