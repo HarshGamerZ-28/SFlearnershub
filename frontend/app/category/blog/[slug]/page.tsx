@@ -4,16 +4,22 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CategoryPageClient from "@/components/blog/CategoryPageClient";
+import { USE_MOCK_DATA } from "@/lib/config";
+import { mockCategories } from "@/lib/mockData";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "https://sflearnershub.onrender.com";
 
 async function getCategory(slug: string) {
+  if (USE_MOCK_DATA) {
+    return mockCategories.find((c) => c.slug === slug) || null;
+  }
   try {
     const res = await fetch(`${API}/api/categories/${slug}`, { next: { revalidate: 600 } });
     if (!res.ok) return null;
     return res.json();
   } catch { return null; }
 }
+
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const cat = await getCategory(params.slug);

@@ -5,10 +5,15 @@ import Link from "next/link";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import BlogDetailClient from "@/components/blog/BlogDetailClient";
+import { USE_MOCK_DATA } from "@/lib/config";
+import { mockPosts } from "@/lib/mockData";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "https://sflearnershub.onrender.com";
 
 async function getPost(slug: string) {
+  if (USE_MOCK_DATA) {
+    return mockPosts.find((p) => p.slug === slug) || null;
+  }
   const url = `${API}/api/blogs/${slug}`;
   console.log(`Fetching post from: ${url}`);
   try {
@@ -27,6 +32,13 @@ async function getPost(slug: string) {
 }
 
 async function getRelated(slug: string, categorySlug?: string) {
+  if (USE_MOCK_DATA) {
+    let items = mockPosts.filter((p) => p.slug !== slug);
+    if (categorySlug) {
+      items = items.filter((p) => p.categories.some((c) => c.slug === categorySlug));
+    }
+    return items.slice(0, 3);
+  }
   try {
     const params = categorySlug ? `category=${categorySlug}&per_page=3` : `per_page=3`;
     const res = await fetch(`${API}/api/blogs?${params}`, { next: { revalidate: 300 } });
@@ -37,6 +49,7 @@ async function getRelated(slug: string, categorySlug?: string) {
     return [];
   }
 }
+
 
 // ─── Dynamic SEO metadata ─────────────────────────────────────────────────────
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
