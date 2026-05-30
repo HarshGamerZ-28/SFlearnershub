@@ -47,8 +47,8 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "dark:bg-dark-900/95 dark:backdrop-blur-xl dark:border-b dark:border-[rgba(91,114,240,0.2)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)] light:bg-white/95 light:backdrop-blur-xl light:border-b light:border-slate-200 light:shadow-[0_2px_20px_rgba(0,0,0,0.08)]"
-          : "dark:bg-dark-900/80 dark:backdrop-blur-md dark:border-b dark:border-[rgba(91,114,240,0.1)] light:bg-white/80 light:backdrop-blur-md light:border-b light:border-slate-100"
+          ? "bg-white/95 dark:bg-dark-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-[rgba(91,114,240,0.2)] shadow-[0_2px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+          : "bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-slate-100 dark:border-[rgba(91,114,240,0.1)]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
@@ -135,7 +135,7 @@ export default function Navbar() {
           {/* Auth */}
           <Link
             href="/auth/login"
-            className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium dark:text-slate-300 light:text-slate-700 dark:hover:text-white light:hover:text-slate-900 dark:border dark:border-[rgba(91,114,240,0.25)] light:border light:border-slate-300 dark:hover:border-[rgba(91,114,240,0.5)] light:hover:border-slate-400 dark:hover:bg-[rgba(91,114,240,0.08)] light:hover:bg-slate-100 transition-all"
+            className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-[rgba(91,114,240,0.25)] hover:border-slate-400 dark:hover:border-[rgba(91,114,240,0.5)] hover:bg-slate-100 dark:hover:bg-[rgba(91,114,240,0.08)] transition-all"
           >
             Sign In
           </Link>
@@ -152,7 +152,7 @@ export default function Navbar() {
 
       {/* Search overlay */}
       {searchOpen && (
-        <div className="dark:border-t dark:border-[rgba(91,114,240,0.15)] light:border-t light:border-slate-200 dark:bg-dark-800/95 light:bg-slate-50/95 backdrop-blur-xl px-6 py-3 animate-fade-in">
+        <div className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-slate-50/95 dark:bg-dark-800/95 backdrop-blur-xl px-6 py-3 animate-fade-in">
           <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex gap-3">
             <div className="flex-1 relative">
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -177,12 +177,12 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden border-t border-[rgba(91,114,240,0.15)] bg-dark-800/98 backdrop-blur-xl animate-fade-in">
+        <div className="lg:hidden border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-white/95 dark:bg-dark-800/98 backdrop-blur-xl animate-fade-in">
           <div className="max-h-[70vh] overflow-y-auto px-4 py-4 space-y-1">
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
             >
               Home
             </Link>
@@ -195,32 +195,32 @@ export default function Navbar() {
                 key={item.slug}
                 href={`/category/blog/${item.slug}`}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-2 pl-6 pr-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+                className="flex items-center gap-2 pl-6 pr-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
               >
                 {item.name}
               </Link>
             ))}
 
-            <div className="h-px bg-white/5 my-2" />
+            <div className="h-px bg-slate-200 dark:bg-white/5 my-2" />
 
             <Link
               href="/about"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
             >
               About Us
             </Link>
             <Link
               href="/gallery"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
             >
               Gallery
             </Link>
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
             >
               Contact Us
             </Link>

@@ -74,14 +74,14 @@ export default function BlogListClient({ initialParams }: Props) {
       <div className="glass rounded-2xl p-4 mb-8 space-y-3">
         <div className="flex gap-3 flex-wrap">
           {/* Search */}
-          <div className="flex-1 min-w-[200px] relative">
+          <div className="w-full sm:flex-1 sm:min-w-[200px] relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
               value={query}
               onChange={(e) => { setQuery(e.target.value); setPage(1); }}
               placeholder="Search blogs, topics, keywords…"
-              className="w-full pl-9 pr-4 py-2.5 bg-dark-700 border border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-white placeholder:text-slate-500 outline-none focus:border-[rgba(91,114,240,0.45)] transition-all"
+              className="w-full pl-9 pr-4 py-2.5 bg-slate-100 dark:bg-dark-700 border border-slate-200 dark:border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-500 outline-none focus:border-brand-500 dark:focus:border-[rgba(91,114,240,0.45)] transition-all"
             />
           </div>
 
@@ -89,7 +89,7 @@ export default function BlogListClient({ initialParams }: Props) {
           <select
             value={category}
             onChange={(e) => { setCategory(e.target.value); setPage(1); }}
-            className="px-3 py-2.5 bg-dark-700 border border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-300 outline-none focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
+            className="w-full sm:w-auto px-3 py-2.5 bg-slate-100 dark:bg-dark-700 border border-slate-200 dark:border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-700 dark:text-slate-300 outline-none focus:border-brand-500 dark:focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
@@ -101,13 +101,13 @@ export default function BlogListClient({ initialParams }: Props) {
           <select
             value={difficulty}
             onChange={(e) => { setDifficulty(e.target.value); setPage(1); }}
-            className="px-3 py-2.5 bg-dark-700 border border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-300 outline-none focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
+            className="w-full sm:w-auto px-3 py-2.5 bg-slate-100 dark:bg-dark-700 border border-slate-200 dark:border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-700 dark:text-slate-300 outline-none focus:border-brand-500 dark:focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
           >
             {DIFFICULTIES.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
           </select>
 
           {hasFilters && (
-            <button onClick={clearFilters} className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm text-slate-400 hover:text-white border border-[rgba(255,255,255,0.1)] hover:border-[rgba(255,255,255,0.2)] transition-all">
+            <button onClick={clearFilters} className="w-full sm:w-auto justify-center flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border border-slate-200 dark:border-[rgba(255,255,255,0.1)] hover:border-slate-300 dark:hover:border-[rgba(255,255,255,0.2)] transition-all">
               <X size={14} /> Clear
             </button>
           )}

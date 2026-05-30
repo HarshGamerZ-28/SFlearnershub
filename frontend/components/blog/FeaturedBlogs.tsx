@@ -32,7 +32,7 @@ export function FeaturedBlogs() {
           {posts.map((post, i) => (
             <div
               key={post.id}
-              className="animate-fade-up opacity-0"
+              className={`animate-fade-up opacity-0 ${i === 0 ? "sm:col-span-2 lg:col-span-3" : ""}`}
               style={{ animationDelay: `${i * 0.1}s`, animationFillMode: "forwards" }}
             >
               <BlogCard post={post} featured={i === 0} />

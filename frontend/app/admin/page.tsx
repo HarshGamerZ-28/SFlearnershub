@@ -362,7 +362,11 @@ function NewPostForm({ onSuccess }: { onSuccess: () => void }) {
     if (!form.title || !form.content) { setError("Title and content are required"); return; }
     setSaving(true); setError("");
     try {
-      await blogApi.create({ ...form, slug: form.slug || autoSlug(form.title) });
+      await blogApi.create({
+        ...form,
+        difficulty: form.difficulty as "beginner" | "intermediate" | "advanced",
+        slug: form.slug || autoSlug(form.title)
+      });
       onSuccess();
     } catch (err: any) {
       setError(err?.response?.data?.detail || "Failed to create post");

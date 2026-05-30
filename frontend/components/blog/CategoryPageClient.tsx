@@ -45,7 +45,7 @@ export default function CategoryPageClient({ category }: Props) {
             <Layers size={24} style={{ color: category.color }} />
           </div>
           <div>
-            <h1 className="font-display text-4xl font-extrabold text-white mb-2">{category.name}</h1>
+            <h1 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-2">{category.name}</h1>
             {category.description && (
               <p className="text-slate-400 text-lg">{category.description}</p>
             )}

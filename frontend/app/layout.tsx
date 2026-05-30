@@ -23,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
       </head>
-      <body className="noise bg-dark-900 text-slate-100 font-body antialiased dark:bg-dark-900 dark:text-slate-100 light:bg-slate-50 light:text-slate-900 transition-colors duration-300">
+      <body className="noise bg-slate-50 text-slate-900 font-body antialiased dark:bg-dark-900 dark:text-slate-100 transition-colors duration-300">
         <ThemeProvider>
           {children}
         </ThemeProvider>

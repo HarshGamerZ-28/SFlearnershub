@@ -274,7 +274,7 @@ export default function BlogDetailClient({ post, related }: Props) {
             {/* Share */}
             <div className="mt-8 pt-6 border-t border-[rgba(91,114,240,0.12)]">
               <p className="text-sm text-slate-500 mb-3 font-medium">Share this article</p>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <a
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`}
                   target="_blank" rel="noopener noreferrer"
