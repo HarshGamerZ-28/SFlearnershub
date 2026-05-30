@@ -291,3 +291,52 @@ html:not(.dark) header .hover\:text-white:hover {
 
 .animate-on-scroll { opacity: 0; transform: translateY(24px); transition: all 0.6s cubic-bezier(0.16,1,0.3,1); }
 .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Mobile Optimizations ──────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Better touch targets on mobile */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent font size zoom on iOS */
+  input, select, textarea {
+    font-size: 16px;
+  }
+  
+  /* Reduce margins on mobile */
+  section {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  /* Better spacing for stacked content */
+  .flex-col > * + * {
+    margin-top: 0.5rem;
+  }
+  
+  /* Improve readability on small screens */
+  h1 { letter-spacing: -0.5px; }
+  h2 { letter-spacing: -0.25px; }
+  
+  /* Disable animations on very small screens for better performance */
+  @media (max-width: 480px) {
+    .animate-float,
+    .animate-fade-up,
+    .animate-slide-right {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+/* ── Medium and larger screens ─────────────────────────────── */
+@media (min-width: 641px) {
+  /* Enable smooth animations on larger devices */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}

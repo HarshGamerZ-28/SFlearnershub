@@ -36,6 +36,8 @@ export default function BlogCard({ post, featured = false }: Props) {
       {/* Thumbnail */}
       <div
         className={clsx(
+          "relative overflow-hidden bg-gradient-to-br from-brand-900/40 to-violet-900/20",
+          featured ? "w-full lg:w-2/5 h-48 sm:h-64 lg:h-auto min-h-[200px]" : "h-44"
           "relative overflow-hidden bg-slate-800",
           featured ? "lg:w-2/5 min-h-[200px]" : "h-52 sm:h-64 lg:h-48"
         )}
@@ -110,7 +112,7 @@ export default function BlogCard({ post, featured = false }: Props) {
         {post.tags.length > 0 && (
           <div className="flex gap-1.5 flex-wrap mb-3">
             {post.tags.slice(0, 3).map((tag) => (
-              <span key={tag.id} className="text-xs px-2 py-0.5 rounded bg-dark-600 text-slate-500 border border-dark-400">
+              <span key={tag.id} className="text-xs px-2 py-0.5 rounded bg-slate-100 dark:bg-dark-600 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-dark-400">
                 #{tag.name}
               </span>
             ))}

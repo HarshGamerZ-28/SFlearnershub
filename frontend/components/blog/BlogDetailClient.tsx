@@ -102,6 +102,15 @@ export default function BlogDetailClient({ post, related }: Props) {
         style={{ width: `${readPct}%` }}
       />
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        <div className="flex gap-4 sm:gap-8 items-start">
+
+          {/* ─── TOC Sidebar (desktop) ─── */}
+          {toc.length > 0 && (
+            <aside className="hidden xl:block w-56 shrink-0 sticky top-24">
+              <div className="glass rounded-xl sm:rounded-2xl p-3 sm:p-4">
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                  <BookOpen size={12} />
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="flex gap-8 items-start justify-center">
 
@@ -146,6 +155,7 @@ export default function BlogDetailClient({ post, related }: Props) {
             {/* Back */}
             <Link
               href="/blog"
+              className="inline-flex items-center gap-2 text-xs sm:text-sm text-slate-500 hover:text-white mb-6 sm:mb-8 transition-colors group"
               className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white mb-8 transition-colors group"
             >
               <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
@@ -153,6 +163,8 @@ export default function BlogDetailClient({ post, related }: Props) {
             </Link>
 
             {/* Breadcrumb */}
+            <nav className="flex items-center gap-1 text-xs text-slate-600 mb-4 sm:mb-6 flex-wrap">
+              <Link href="/" className="hover:text-slate-400 transition-colors">Home</Link>
             <nav className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-600 mb-6">
               <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-400 transition-colors">Home</Link>
               <ChevronRight size={11} />
@@ -170,12 +182,29 @@ export default function BlogDetailClient({ post, related }: Props) {
               )}
             </nav>
 
+            {/* Category pills */}
+            <div className="flex flex-wrap gap-2 mb-3 sm:mb-4">
+              {post.categories.map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/category/blog/${cat.slug}`}
+                  className="text-xs font-semibold px-2.5 sm:px-3 py-1 rounded-full bg-brand-600/12 text-brand-400 border border-brand-500/20 hover:bg-brand-600/20 transition-all"
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </div>
+
+            {/* Title */}
+            <h1 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl leading-tight text-white mb-4 sm:mb-6">
             {/* Title */}
             <h1 className="font-display font-extrabold text-3xl sm:text-4xl leading-tight text-slate-900 dark:text-white mb-6">
               {post.title}
             </h1>
 
             {/* Meta bar */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-400 pb-3 sm:pb-5 border-b border-[rgba(91,114,240,0.12)] mb-4 sm:mb-6">
+              <span className={`text-xs font-semibold px-2 py-1 rounded-md font-mono ${diff.cls}`}>
             <div className="flex flex-wrap items-center gap-4 text-sm text-slate-600 dark:text-slate-400 pb-5 border-b border-[rgba(91,114,240,0.12)] mb-6">
               <span className={`text-xs font-semibold px-2.5 py-1 rounded-md font-mono ${diff.cls}`}>
                 {diff.label}
@@ -271,6 +300,8 @@ export default function BlogDetailClient({ post, related }: Props) {
 
             {/* Share */}
             <div className="mt-8 pt-6 border-t border-[rgba(91,114,240,0.12)]">
+              <p className="text-sm text-slate-500 mb-3 font-medium">Share this article</p>
+              <div className="flex flex-wrap gap-2">
               <p className="text-sm text-slate-700 dark:text-slate-500 mb-3 font-medium">Share this article</p>
               <div className="flex gap-2">
                 <a

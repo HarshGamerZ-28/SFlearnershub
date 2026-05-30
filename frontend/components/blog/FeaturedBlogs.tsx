@@ -16,23 +16,23 @@ export function FeaturedBlogs() {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-2 mb-4 sm:mb-6">
         <Star size={18} className="text-brand-400" />
-        <h2 className="font-display text-2xl font-bold">Featured Articles</h2>
+        <h2 className="font-display text-xl sm:text-2xl font-bold">Featured Articles</h2>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="skeleton h-72 rounded-2xl" style={{ animationDelay: `${i * 0.08}s` }} />
+            <div key={i} className="skeleton h-72 rounded-xl sm:rounded-2xl" style={{ animationDelay: `${i * 0.08}s` }} />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {posts.map((post, i) => (
             <div
               key={post.id}
-              className="animate-fade-up opacity-0"
+              className={`animate-fade-up opacity-0 ${i === 0 ? "sm:col-span-2 lg:col-span-3" : ""}`}
               style={{ animationDelay: `${i * 0.1}s`, animationFillMode: "forwards" }}
             >
               <BlogCard post={post} featured={i === 0} />

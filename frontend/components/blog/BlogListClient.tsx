@@ -71,17 +71,17 @@ export default function BlogListClient({ initialParams }: Props) {
   return (
     <div>
       {/* Search + Filters */}
-      <div className="glass rounded-2xl p-4 mb-8 space-y-3">
-        <div className="flex gap-3 flex-wrap">
+      <div className="glass rounded-lg sm:rounded-2xl p-3 sm:p-4 mb-6 sm:mb-8 space-y-2 sm:space-y-3">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
           {/* Search */}
-          <div className="flex-1 min-w-[200px] relative">
+          <div className="w-full sm:flex-1 sm:min-w-[200px] relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
             <input
               type="text"
               value={query}
               onChange={(e) => { setQuery(e.target.value); setPage(1); }}
               placeholder="Search blogs, topics, keywords…"
-              className="w-full pl-9 pr-4 py-2.5 bg-dark-700 border border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-white placeholder:text-slate-500 outline-none focus:border-[rgba(91,114,240,0.45)] transition-all"
+              className="w-full pl-9 pr-4 py-2.5 bg-slate-100 dark:bg-dark-700 border border-slate-200 dark:border-[rgba(91,114,240,0.15)] rounded-lg sm:rounded-xl text-sm text-slate-900 dark:text-white placeholder:text-slate-500 outline-none focus:border-brand-500 dark:focus:border-[rgba(91,114,240,0.45)] transition-all"
             />
           </div>
 
@@ -89,7 +89,7 @@ export default function BlogListClient({ initialParams }: Props) {
           <select
             value={category}
             onChange={(e) => { setCategory(e.target.value); setPage(1); }}
-            className="px-3 py-2.5 bg-dark-700 border border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-300 outline-none focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
+            className="w-full sm:w-auto px-3 py-2.5 bg-slate-100 dark:bg-dark-700 border border-slate-200 dark:border-[rgba(91,114,240,0.15)] rounded-lg sm:rounded-xl text-sm text-slate-700 dark:text-slate-300 outline-none focus:border-brand-500 dark:focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
           >
             <option value="">All Categories</option>
             {categories.map((cat) => (
@@ -101,13 +101,13 @@ export default function BlogListClient({ initialParams }: Props) {
           <select
             value={difficulty}
             onChange={(e) => { setDifficulty(e.target.value); setPage(1); }}
-            className="px-3 py-2.5 bg-dark-700 border border-[rgba(91,114,240,0.15)] rounded-xl text-sm text-slate-300 outline-none focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
+            className="w-full sm:w-auto px-3 py-2.5 bg-slate-100 dark:bg-dark-700 border border-slate-200 dark:border-[rgba(91,114,240,0.15)] rounded-lg sm:rounded-xl text-sm text-slate-700 dark:text-slate-300 outline-none focus:border-brand-500 dark:focus:border-[rgba(91,114,240,0.45)] transition-all cursor-pointer"
           >
             {DIFFICULTIES.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
           </select>
 
           {hasFilters && (
-            <button onClick={clearFilters} className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm text-slate-400 hover:text-white border border-[rgba(255,255,255,0.1)] hover:border-[rgba(255,255,255,0.2)] transition-all">
+            <button onClick={clearFilters} className="w-full sm:w-auto justify-center flex items-center gap-1.5 px-3 py-2.5 rounded-lg sm:rounded-xl text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border border-slate-200 dark:border-[rgba(255,255,255,0.1)] hover:border-slate-300 dark:hover:border-[rgba(255,255,255,0.2)] transition-all">
               <X size={14} /> Clear
             </button>
           )}
@@ -124,7 +124,7 @@ export default function BlogListClient({ initialParams }: Props) {
       </div>
 
       {/* Count */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4 mb-4 sm:mb-6">
         <p className="text-slate-400 text-sm">
           {loading ? "Loading…" : `${total.toLocaleString()} posts found`}
         </p>
@@ -136,18 +136,18 @@ export default function BlogListClient({ initialParams }: Props) {
 
       {/* Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {Array.from({ length: 9 }).map((_, i) => (
-            <div key={i} className="skeleton h-72 rounded-2xl" style={{ animationDelay: `${i * 0.05}s` }} />
+            <div key={i} className="skeleton h-72 rounded-xl sm:rounded-2xl" style={{ animationDelay: `${i * 0.05}s` }} />
           ))}
         </div>
       ) : posts.length === 0 ? (
-        <div className="text-center py-24 glass rounded-2xl">
-          <p className="text-slate-500 text-lg mb-2">No posts found</p>
+        <div className="text-center py-16 sm:py-24 glass rounded-lg sm:rounded-2xl">
+          <p className="text-slate-500 text-base sm:text-lg mb-2">No posts found</p>
           <p className="text-slate-600 text-sm">Try adjusting your search or clearing filters</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           {posts.map((post) => (
             <BlogCard key={post.id} post={post} />
           ))}
@@ -156,22 +156,22 @@ export default function BlogListClient({ initialParams }: Props) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-12">
+        <div className="flex items-center justify-center gap-1 sm:gap-2 mt-8 sm:mt-12">
           <button
             disabled={page <= 1}
             onClick={() => setPage(p => p - 1)}
-            className="px-4 py-2 rounded-lg glass text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
+            className="px-2 sm:px-4 py-2 rounded-lg glass text-xs sm:text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
           >
             ← Prev
           </button>
-          <div className="flex gap-1">
+          <div className="flex gap-0.5 sm:gap-1">
             {Array.from({ length: Math.min(totalPages, 7) }).map((_, i) => {
               const p = i + 1;
               return (
                 <button
                   key={p}
                   onClick={() => setPage(p)}
-                  className={`w-9 h-9 rounded-lg text-sm transition-all ${
+                  className={`w-8 sm:w-9 h-8 sm:h-9 rounded-lg text-xs sm:text-sm transition-all ${
                     p === page
                       ? "bg-gradient-to-br from-brand-500 to-violet-600 text-white font-bold"
                       : "glass text-slate-400 hover:text-white"
@@ -185,7 +185,7 @@ export default function BlogListClient({ initialParams }: Props) {
           <button
             disabled={page >= totalPages}
             onClick={() => setPage(p => p + 1)}
-            className="px-4 py-2 rounded-lg glass text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
+            className="px-2 sm:px-4 py-2 rounded-lg glass text-xs sm:text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
           >
             Next →
           </button>

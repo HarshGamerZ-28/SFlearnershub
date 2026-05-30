@@ -18,16 +18,16 @@ export default function BlogPage({ searchParams }: Props) {
   return (
     <>
       <Navbar />
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-10">
-          <h1 className="font-display text-4xl font-extrabold mb-3">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="mb-8 sm:mb-10">
+          <h1 className="font-display text-2xl sm:text-4xl font-extrabold mb-2 sm:mb-3">
             All <span className="gradient-text">Blogs</span>
           </h1>
-          <p className="text-slate-400">
+          <p className="text-sm sm:text-base text-slate-400">
             Explore hundreds of Salesforce tutorials, guides, and deep-dives — all migrated from the original WordPress site with every slug preserved.
           </p>
         </div>
-        <Suspense fallback={<div className="h-96 skeleton rounded-2xl" />}>
+        <Suspense fallback={<div className="h-96 skeleton rounded-xl sm:rounded-2xl" />}>
           <BlogListClient initialParams={searchParams} />
         </Suspense>
       </main>

@@ -38,7 +38,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
   return (
     <>
       <Navbar />
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <CategoryPageClient category={category} />
       </main>
       <Footer />
