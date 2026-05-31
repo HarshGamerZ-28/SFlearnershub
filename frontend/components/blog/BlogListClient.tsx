@@ -12,6 +12,12 @@ const DIFFICULTIES = [
   { value: "advanced", label: "Advanced" },
 ];
 
+const DIFFICULTY_LABELS: Record<string, string> = {
+  beginner: "Beginner",
+  intermediate: "Intermediate",
+  advanced: "Advanced",
+};
+
 interface Props {
   initialParams: { page?: string; category?: string; difficulty?: string; q?: string };
 }
@@ -118,7 +124,7 @@ export default function BlogListClient({ initialParams }: Props) {
           <div className="flex gap-2 flex-wrap">
             {query && <ActivePill label={`"${query}"`} onRemove={() => setQuery("")} />}
             {category && <ActivePill label={categories.find(c => c.slug === category)?.name || category} onRemove={() => setCategory("")} />}
-            {difficulty && <ActivePill label={difficulty} onRemove={() => setDifficulty("")} />}
+            {difficulty && <ActivePill label={DIFFICULTY_LABELS[difficulty] || difficulty} onRemove={() => setDifficulty("")} />}
           </div>
         )}
       </div>

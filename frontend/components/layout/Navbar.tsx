@@ -183,8 +183,8 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-white/95 dark:bg-dark-800/98 backdrop-blur-xl animate-fade-in">
-          <div className="max-h-[calc(100vh-56px)] overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-0.5 sm:space-y-1">
+        <div className="lg:hidden fixed inset-x-0 top-[56px] sm:top-[64px] z-40 border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-white/95 dark:bg-dark-800/98 backdrop-blur-xl animate-fade-in">
+          <div className="max-h-[calc(100vh-56px)] sm:max-h-[calc(100vh-64px)] overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-0.5 sm:space-y-1">
             <Link
               href="/"
               onClick={() => setOpen(false)}
