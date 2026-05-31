@@ -123,55 +123,56 @@ export default function HeroSection() {
 
         {/* Home Video */}
         <div className="max-w-4xl mx-auto mb-10 sm:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
-        {/* Home Video with Controls */}
-        <div className="group relative max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
-          <video 
-            ref={videoRef}
-            src="https://sflearnershub.com/wp-content/uploads/2026/01/m3raee3zxxrmr0cvga08nyg05m_result_.mp4" 
-            autoPlay 
-            loop 
-            muted={isMuted}
-            playsInline 
-            onTimeUpdate={handleTimeUpdate}
-            className="w-full h-auto object-cover"
-          />
-          
-          {/* Custom Controls Overlay */}
-          <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-            <div className="flex flex-col gap-4">
-              {/* Progress Line */}
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={progress}
-                onChange={handleSeek}
-                className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-brand-400"
-              />
-              
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <button onClick={togglePlay} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
-                    {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
-                  </button>
-                  
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => skip(-10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
-                      <RotateCcw size={20} />
+          {/* Home Video with Controls */}
+          <div className="group relative max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
+            <video
+              ref={videoRef}
+              src="https://sflearnershub.com/wp-content/uploads/2026/01/m3raee3zxxrmr0cvga08nyg05m_result_.mp4"
+              autoPlay
+              loop
+              muted={isMuted}
+              playsInline
+              onTimeUpdate={handleTimeUpdate}
+              className="w-full h-auto object-cover"
+            />
+
+            {/* Custom Controls Overlay */}
+            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <div className="flex flex-col gap-4">
+                {/* Progress Line */}
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={progress}
+                  onChange={handleSeek}
+                  className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-brand-400"
+                />
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <button onClick={togglePlay} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                      {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                     </button>
-                    <button onClick={() => skip(10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
-                      <RotateCw size={20} />
+
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => skip(-10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                        <RotateCcw size={20} />
+                      </button>
+                      <button onClick={() => skip(10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                        <RotateCw size={20} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <button onClick={toggleMute} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                      {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                    </button>
+                    <button onClick={toggleFullscreen} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                      <Maximize size={20} />
                     </button>
                   </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <button onClick={toggleMute} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
-                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                  </button>
-                  <button onClick={toggleFullscreen} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
-                    <Maximize size={20} />
-                  </button>
                 </div>
               </div>
             </div>
