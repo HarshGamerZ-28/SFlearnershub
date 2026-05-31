@@ -84,7 +84,7 @@ export default function ImageCarousel() {
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-8">
       <div
-        className="relative w-full h-96 md:h-[500px] rounded-3xl overflow-hidden group"
+        className="relative w-full h-72 sm:h-80 md:h-[450px] rounded-3xl overflow-hidden group"
         onMouseEnter={() => setIsAutoPlay(false)}
         onMouseLeave={() => {
           setIsAutoPlay(true);
@@ -135,7 +135,7 @@ export default function ImageCarousel() {
         {/* Left arrow */}
         <button
           onClick={prev}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 opacity-100"
           aria-label="Previous slide"
         >
           <ChevronLeft size={24} />
@@ -144,7 +144,7 @@ export default function ImageCarousel() {
         {/* Right arrow */}
         <button
           onClick={next}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 opacity-0 group-hover:opacity-100"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/20 hover:bg-white/40 backdrop-blur-md flex items-center justify-center text-white transition-all duration-300 opacity-100"
           aria-label="Next slide"
         >
           <ChevronRight size={24} />

@@ -239,6 +239,8 @@ export default function BlogDetailClient({ post, related }: Props) {
               />
             </div>
 
+            <div id="adsense-inline" className="mb-8 min-h-[120px] rounded-3xl bg-slate-900/5" />
+
             {ytId && (
               <div className="mb-8 rounded-2xl overflow-hidden border border-[rgba(91,114,240,0.2)] shadow-glow-brand">
                 <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 dark:bg-dark-700 border-b border-[rgba(91,114,240,0.12)]">

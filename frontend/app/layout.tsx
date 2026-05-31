@@ -48,7 +48,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable} noise bg-slate-50 text-slate-900 font-body antialiased dark:bg-dark-900 dark:text-slate-100 transition-colors duration-300`}>
+      <body className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable} noise bg-slate-50 text-slate-900 font-body antialiased dark:bg-dark-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden`}>
         <ThemeProvider>
           {children}
         </ThemeProvider>
