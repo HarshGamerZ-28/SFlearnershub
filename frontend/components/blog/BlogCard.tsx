@@ -38,8 +38,6 @@ export default function BlogCard({ post, featured = false }: Props) {
         className={clsx(
           "relative overflow-hidden bg-gradient-to-br from-brand-900/40 to-violet-900/20",
           featured ? "w-full lg:w-2/5 h-48 sm:h-64 lg:h-auto min-h-[200px]" : "h-44"
-          "relative overflow-hidden bg-slate-800",
-          featured ? "lg:w-2/5 min-h-[200px]" : "h-52 sm:h-64 lg:h-48"
         )}
       >
         <Image
