@@ -116,209 +116,201 @@ export default function BlogDetailClient({ post, related }: Props) {
         style={{ width: `${readPct}%` }}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-        <div className="grid gap-8 xl:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
-          {toc.length > 0 && (
-            <aside className="hidden xl:block sticky top-24 self-start max-h-[calc(100vh-6rem)] overflow-y-auto">
-              <div className="glass rounded-2xl p-5">
-                <div className="flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4">
-                  <BookOpen size={16} />
-                  On this page
-                </div>
-                <nav className="space-y-2">
-                  {toc.map((item) => (
-                    <a
-                      key={item.id}
-                      href={`#${item.id}`}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        const element = document.getElementById(item.id);
-                        if (element) {
-                          const y = element.getBoundingClientRect().top + window.scrollY - 100;
-                          window.scrollTo({ top: y, behavior: "smooth" });
-                        }
-                      }}
-                      className={`block text-sm leading-6 rounded transition-all ${
-                        activeId === item.id
-                          ? "text-brand-600 dark:text-brand-400 font-semibold"
-                          : "text-slate-600 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
-                      }`}
-                    >
-                      {item.level === 3 && <span className="inline-block mr-2 text-slate-400 dark:text-slate-600">›</span>}
-                      {item.text}
-                    </a>
-                  ))}
-                </nav>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+        {/* Back Navigation */}
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white mb-6 transition-colors group focus-ring"
+        >
+          <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
+          ← Back to blogs
+        </Link>
+
+        {/* Breadcrumb Navigation */}
+        <nav className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mb-6 overflow-x-auto pb-2">
+          <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors whitespace-nowrap">
+            Home
+          </Link>
+          <ChevronRight size={11} className="flex-shrink-0" />
+          <Link href="/blog" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors whitespace-nowrap">
+            Blog
+          </Link>
+          {post.categories[0] && (
+            <>
+              <ChevronRight size={11} className="flex-shrink-0" />
+              <Link
+                href={`/category/blog/${post.categories[0].slug}`}
+                className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors truncate"
+              >
+                {post.categories[0].name}
+              </Link>
+            </>
+          )}
+        </nav>
+
+        {/* Category Tags */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {post.categories.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/category/blog/${cat.slug}`}
+              className="text-xs font-semibold px-3 py-1.5 rounded-full bg-brand-600/12 text-brand-400 border border-brand-500/20 hover:bg-brand-600/20 transition-all focus-ring"
+            >
+              {cat.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* Article Header */}
+        <article className="mb-8">
+          <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-slate-900 dark:text-white mb-6 break-words">
+            {post.title}
+          </h1>
+
+          {/* Article Metadata */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-sm pb-6 mb-6 border-b border-[rgba(91,114,240,0.12)]">
+            <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+              <span className={`text-xs font-bold px-2 py-1 rounded-md font-mono w-fit ${diff.cls}`}>
+                {diff.label}
+              </span>
+            </div>
+            {post.reading_time && (
+              <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                <Clock size={14} className="flex-shrink-0" />
+                <span className="truncate">{post.reading_time} min</span>
               </div>
-            </aside>
+            )}
+            <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+              <Eye size={14} className="flex-shrink-0" />
+              <span className="truncate">{post.view_count.toLocaleString()} views</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+              <Calendar size={14} className="flex-shrink-0" />
+              <span className="truncate text-xs">{format(new Date(post.published_at), "MMM d, yy")}</span>
+            </div>
+            {post.author && (
+              <div className="col-span-2 sm:col-span-4 flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                <User size={14} className="flex-shrink-0" />
+                <span className="truncate">By {post.author.full_name || post.author.username}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Featured Image */}
+          <div className="relative w-full aspect-video rounded-2xl sm:rounded-3xl overflow-hidden mb-8 border border-[rgba(91,114,240,0.15)] shadow-lg bg-slate-800">
+            <Image
+              src={
+                post.featured_image && post.featured_image.length > 5
+                  ? post.featured_image.startsWith("http")
+                    ? post.featured_image
+                    : `https://sflearnershub.com${post.featured_image.startsWith("/") ? "" : "/"}${post.featured_image}`
+                  : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
+              }
+              alt={post.title || "Blog Post"}
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 600px"
+            />
+          </div>
+
+          {/* Top Ad Container */}
+          <div id="adsense-top" className="mb-8 min-h-[250px] sm:min-h-[280px] rounded-2xl bg-slate-900/5 dark:bg-slate-800/30 border border-dashed border-[rgba(91,114,240,0.15)] flex items-center justify-center">
+            <p className="text-sm text-slate-400">📢 Advertisement</p>
+          </div>
+
+          {/* YouTube Video */}
+          {ytId && (
+            <div className="mb-8 rounded-2xl overflow-hidden border border-[rgba(91,114,240,0.2)] shadow-lg bg-black">
+              <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 dark:bg-dark-700 border-b border-[rgba(91,114,240,0.12)]">
+                <Youtube size={16} className="text-red-500" />
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Video Tutorial</span>
+              </div>
+              <div className="aspect-video bg-black flex items-center justify-center overflow-hidden">
+                <iframe
+                  src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`}
+                  title={`Video: ${post.title}`}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
           )}
 
-          <main className="min-w-0">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white mb-8 transition-colors group"
-            >
-              <ArrowLeft size={15} className="group-hover:-translate-x-1 transition-transform" />
-              Back to all blogs
-            </Link>
+          {/* Main Content */}
+          <div
+            ref={contentRef}
+            className="prose dark:prose-invert max-w-none prose-p:text-base prose-p:leading-8 prose-p:text-slate-700 dark:prose-p:text-slate-300 prose-p:mb-6 prose-headings:font-display prose-headings:font-bold prose-headings:text-slate-900 dark:prose-headings:text-white prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-strong:text-slate-900 dark:prose-strong:text-white prose-strong:font-semibold prose-a:text-brand-600 dark:prose-a:text-brand-400 prose-a:no-underline hover:prose-a:underline prose-a:transition-colors prose-code:text-cyan-600 dark:prose-code:text-cyan-400 prose-code:bg-cyan-50 dark:prose-code:bg-[rgba(34,211,238,0.1)] prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-slate-900 dark:prose-pre:bg-dark-800 prose-pre:text-slate-50 prose-pre:border prose-pre:border-[rgba(91,114,240,0.2)] prose-pre:rounded-xl prose-pre:overflow-x-auto prose-pre:p-4 prose-img:rounded-2xl prose-img:border prose-img:border-[rgba(91,114,240,0.15)] prose-img:shadow-lg prose-blockquote:border-l-4 prose-blockquote:border-brand-500 prose-blockquote:bg-brand-600/5 dark:prose-blockquote:bg-brand-900/10 prose-blockquote:rounded-r-xl prose-blockquote:pl-4 prose-blockquote:pr-4 prose-blockquote:py-3 prose-blockquote:italic prose-blockquote:text-slate-700 dark:prose-blockquote:text-slate-300 prose-hr:border-[rgba(91,114,240,0.15)] prose-hr:my-8 prose-table:text-sm prose-th:bg-slate-100 dark:prose-th:bg-dark-700 prose-th:font-semibold prose-td:border-[rgba(91,114,240,0.1)] prose-ul:list-disc prose-ul:pl-6 prose-ul:text-slate-700 dark:prose-ul:text-slate-300 prose-ol:list-decimal prose-ol:pl-6 prose-ol:text-slate-700 dark:prose-ol:text-slate-300"
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
 
-            <nav className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500 mb-4 sm:mb-6">
-              <Link href="/" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">
-                Home
-              </Link>
-              <ChevronRight size={11} />
-              <Link href="/blog" className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors">
-                Blog
-              </Link>
-              {post.categories[0] && (
-                <>
-                  <ChevronRight size={11} />
-                  <Link
-                    href={`/category/blog/${post.categories[0].slug}`}
-                    className="hover:text-slate-900 dark:hover:text-slate-300 transition-colors"
-                  >
-                    {post.categories[0].name}
-                  </Link>
-                </>
-              )}
-            </nav>
+          {/* Mid-Content Ad */}
+          <div id="adsense-mid" className="my-10 min-h-[250px] sm:min-h-[280px] rounded-2xl bg-slate-900/5 dark:bg-slate-800/30 border border-dashed border-[rgba(91,114,240,0.15)] flex items-center justify-center">
+            <p className="text-sm text-slate-400">📢 Advertisement</p>
+          </div>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.categories.map((cat) => (
+          {/* Tags Section */}
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-10 pt-6 border-t border-[rgba(91,114,240,0.12)]">
+              <Tag size={14} className="text-slate-400 dark:text-slate-500 mt-1" />
+              {post.tags.map((tag) => (
                 <Link
-                  key={cat.id}
-                  href={`/category/blog/${cat.slug}`}
-                  className="text-xs font-semibold px-2.5 sm:px-3 py-1 rounded-full bg-brand-600/12 text-brand-400 border border-brand-500/20 hover:bg-brand-600/20 transition-all"
+                  key={tag.id}
+                  href={`/blog?tag=${tag.slug}`}
+                  className="text-xs px-3 py-2 rounded-lg bg-slate-100 dark:bg-dark-700 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-dark-500 hover:border-brand-500/30 hover:text-slate-900 dark:hover:text-slate-200 transition-all focus-ring"
                 >
-                  {cat.name}
+                  #{tag.name}
                 </Link>
               ))}
             </div>
+          )}
 
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl leading-tight text-slate-900 dark:text-white mb-6">
-              {post.title}
-            </h1>
-
-            <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 dark:text-slate-400 pb-4 mb-6 border-b border-[rgba(91,114,240,0.12)]">
-              <span className={`text-xs font-semibold px-2.5 py-1 rounded-md font-mono ${diff.cls}`}>
-                {diff.label}
-              </span>
-              {post.reading_time && (
-                <span className="flex items-center gap-1.5">
-                  <Clock size={14} /> {post.reading_time} min read
-                </span>
-              )}
-              <span className="flex items-center gap-1.5">
-                <Eye size={14} /> {post.view_count.toLocaleString()} views
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Calendar size={14} />
-                {format(new Date(post.published_at), "MMM d, yyyy")}
-              </span>
-              {post.author && (
-                <span className="flex items-center gap-1.5">
-                  <User size={14} /> {post.author.full_name || post.author.username}
-                </span>
-              )}
+          {/* Share Section */}
+          <div className="mb-10 pt-6 border-t border-[rgba(91,114,240,0.12)]">
+            <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-4">Share this article</p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-lg glass text-sm text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:border-[rgba(91,114,240,0.4)] transition-all focus-ring"
+              >
+                <Twitter size={15} /> Twitter
+              </a>
+              <a
+                href={`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-lg glass text-sm text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:border-[rgba(91,114,240,0.4)] transition-all focus-ring"
+              >
+                <Linkedin size={15} /> LinkedIn
+              </a>
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-lg glass text-sm text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 hover:border-[rgba(91,114,240,0.4)] transition-all focus-ring"
+              >
+                <Link2 size={15} /> {copied ? "✓ Copied!" : "Copy Link"}
+              </button>
             </div>
+          </div>
+        </article>
 
-            <div className="relative aspect-video rounded-3xl overflow-hidden mb-8 border border-[rgba(91,114,240,0.15)] shadow-2xl bg-slate-800">
-              <Image
-                src={
-                  post.featured_image && post.featured_image.length > 5
-                    ? post.featured_image.startsWith("http")
-                      ? post.featured_image
-                      : `https://sflearnershub.com${post.featured_image.startsWith("/") ? "" : "/"}${post.featured_image}`
-                    : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop"
-                }
-                alt={post.title || "Blog Post"}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 1280px) 100vw, 1200px"
-              />
-            </div>
-
-            <div id="adsense-inline" className="mb-8 min-h-[120px] rounded-3xl bg-slate-900/5" />
-
-            {ytId && (
-              <div className="mb-8 rounded-2xl overflow-hidden border border-[rgba(91,114,240,0.2)] shadow-glow-brand">
-                <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 dark:bg-dark-700 border-b border-[rgba(91,114,240,0.12)]">
-                  <Youtube size={16} className="text-red-500" />
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Video Tutorial</span>
-                </div>
-                <div className="aspect-video bg-black flex items-center justify-center">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`}
-                    title={`Video: ${post.title}`}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            )}
-
-            <div
-              ref={contentRef}
-              className="prose dark:prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-7 prose-h3:mb-3 prose-a:text-brand-600 dark:prose-a:text-brand-400 prose-a:no-underline hover:prose-a:underline prose-code:text-cyan-600 dark:prose-code:text-cyan-400 prose-code:bg-[rgba(91,114,240,0.1)] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-pre:bg-slate-800 dark:prose-pre:bg-dark-700 prose-pre:text-slate-50 dark:prose-pre:text-slate-50 prose-pre:border prose-pre:border-[rgba(91,114,240,0.2)] prose-pre:rounded-xl prose-img:rounded-xl prose-img:border prose-img:border-[rgba(91,114,240,0.15)] prose-blockquote:border-l-brand-500 prose-blockquote:bg-brand-600/5 prose-blockquote:rounded-r-xl prose-blockquote:py-2 prose-hr:border-[rgba(91,114,240,0.15)]"
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-
-            {post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-10 pt-6 border-t border-[rgba(91,114,240,0.12)]">
-                <Tag size={14} className="text-slate-400 dark:text-slate-500 mt-0.5" />
-                {post.tags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={`/blog?tag=${tag.slug}`}
-                    className="text-xs px-3 py-1 rounded-lg bg-slate-100 dark:bg-dark-600 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-dark-400 hover:border-brand-500/30 hover:text-slate-900 dark:hover:text-slate-200 transition-all"
-                  >
-                    #{tag.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 pt-6 border-t border-[rgba(91,114,240,0.12)]">
-              <p className="text-sm text-slate-500 mb-3 font-medium">Share this article</p>
-              <div className="flex flex-wrap gap-2">
-                <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(postUrl)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm text-slate-700 dark:text-slate-400 hover:text-brand-600 dark:hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all"
-                >
-                  <Twitter size={14} /> Twitter
-                </a>
-                <a
-                  href={`https://linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postUrl)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm text-slate-700 dark:text-slate-400 hover:text-brand-600 dark:hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all"
-                >
-                  <Linkedin size={14} /> LinkedIn
-                </a>
-                <button
-                  type="button"
-                  onClick={handleCopy}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm text-slate-700 dark:text-slate-400 hover:text-brand-600 dark:hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all"
-                >
-                  <Link2 size={14} /> {copied ? "Copied!" : "Copy Link"}
-                </button>
-              </div>
-            </div>
-          </main>
+        {/* Bottom Ad Container */}
+        <div id="adsense-bottom" className="mb-10 min-h-[250px] sm:min-h-[280px] rounded-2xl bg-slate-900/5 dark:bg-slate-800/30 border border-dashed border-[rgba(91,114,240,0.15)] flex items-center justify-center">
+          <p className="text-sm text-slate-400">📢 Advertisement</p>
         </div>
 
+        {/* Related Articles */}
         {related.length > 0 && (
-          <section className="mt-16 pt-10 border-t border-[rgba(91,114,240,0.12)]">
-            <div className="flex items-center gap-2 mb-6">
+          <section className="mb-12">
+            <div className="flex items-center gap-2 mb-8">
               <Zap size={18} className="text-brand-400" />
-              <h2 className="font-display text-2xl font-bold">Related Articles</h2>
+              <h2 className="font-display text-2xl sm:text-3xl font-bold">Related Articles</h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {related.map((p) => (
                 <BlogCard key={p.id} post={p} />
               ))}
