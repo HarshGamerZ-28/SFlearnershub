@@ -59,7 +59,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div className="w-12 h-12 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
-            <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" />
+            <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" sizes="(max-width: 640px) 48px, 48px" />
           </div>
           <span className="font-display font-bold text-lg sm:text-xl gradient-text hidden sm:block">
             SF Learners Hub
@@ -68,7 +68,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <nav className="hidden lg:flex items-center gap-1">
-          <Link href="/" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+          <Link href="/" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus-ring transition-all text-sm font-medium">
             Home
           </Link>
 
@@ -77,7 +77,7 @@ export default function Navbar() {
             onMouseEnter={() => setActiveDropdown("Blog")}
             onMouseLeave={() => setActiveDropdown(null)}
           >
-            <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+            <button className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus-ring transition-all text-sm font-medium">
               Blog
               <ChevronDown
                 size={13}
@@ -91,7 +91,7 @@ export default function Navbar() {
                   <Link
                     key={item.slug}
                     href={`/category/blog/${item.slug}`}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm"
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus-ring transition-all text-sm"
                   >
                     {item.name}
                   </Link>
@@ -100,15 +100,15 @@ export default function Navbar() {
             )}
           </div>
 
-          <Link href="/about" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+          <Link href="/about" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus-ring transition-all text-sm font-medium">
             About Us
           </Link>
 
-          <Link href="/gallery" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+          <Link href="/gallery" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus-ring transition-all text-sm font-medium">
             Gallery
           </Link>
 
-          <Link href="/contact" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 transition-all text-sm font-medium">
+          <Link href="/contact" className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/5 focus-ring transition-all text-sm font-medium">
             Contact Us
           </Link>
         </nav>
@@ -118,7 +118,7 @@ export default function Navbar() {
           {/* Search toggle */}
           <button
             onClick={() => setSearchOpen(!searchOpen)}
-            className="w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white transition-all"
+            className="w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white focus-ring transition-all"
           >
             <Search size={16} />
           </button>
@@ -126,7 +126,7 @@ export default function Navbar() {
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white transition-all group"
+            className="w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white focus-ring transition-all group"
             title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
           >
             {theme === 'dark' ? (
@@ -139,7 +139,7 @@ export default function Navbar() {
           {/* Auth */}
           <Link
             href="/auth/login"
-            className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-[rgba(91,114,240,0.25)] hover:border-slate-400 dark:hover:border-[rgba(91,114,240,0.5)] hover:bg-slate-100 dark:hover:bg-[rgba(91,114,240,0.08)] transition-all"
+            className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-[rgba(91,114,240,0.25)] hover:border-slate-400 dark:hover:border-[rgba(91,114,240,0.5)] hover:bg-slate-100 dark:hover:bg-[rgba(91,114,240,0.08)] focus-ring transition-all"
           >
             Sign In
           </Link>
@@ -147,7 +147,7 @@ export default function Navbar() {
           {/* Mobile menu */}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white transition-all"
+            className="lg:hidden w-10 h-10 sm:w-9 sm:h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white focus-ring transition-all"
           >
             {open ? <X size={16} /> : <Menu size={16} />}
           </button>

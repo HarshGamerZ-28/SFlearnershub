@@ -50,18 +50,18 @@ export function CategoryGrid() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
           {Array.from({ length: 10 }).map((_, i) => (
             <div key={i} className="skeleton h-24 rounded-2xl" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
           {cats.slice(0, 10).map((cat) => (
             <Link
               key={cat.id}
               href={`/category/blog/${cat.slug}`}
-              className="group glass rounded-2xl p-4 flex flex-col items-center text-center hover:-translate-y-1 hover:border-[rgba(91,114,240,0.4)] transition-all duration-300"
+              className="group glass rounded-2xl p-4 flex flex-col items-center text-center hover:-translate-y-1 hover:border-[rgba(91,114,240,0.4)] focus-ring transition-all duration-300"
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"

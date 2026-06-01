@@ -22,13 +22,13 @@ export function FeaturedBlogs() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="skeleton h-72 rounded-xl sm:rounded-2xl" style={{ animationDelay: `${i * 0.08}s` }} />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
           {posts.map((post, i) => (
             <div
               key={post.id}

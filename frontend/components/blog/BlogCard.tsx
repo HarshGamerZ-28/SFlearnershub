@@ -29,7 +29,7 @@ export default function BlogCard({ post, featured = false }: Props) {
       href={`/blog/${post.slug}`}
       className={clsx(
         "group flex flex-col glass rounded-2xl overflow-hidden transition-all duration-300",
-        "hover:border-[rgba(91,114,240,0.4)] hover:-translate-y-1 hover:shadow-card-hover",
+        "hover:border-[rgba(91,114,240,0.4)] hover:-translate-y-1 hover:shadow-card-hover focus-ring",
         featured && "lg:flex-row"
       )}
     >
