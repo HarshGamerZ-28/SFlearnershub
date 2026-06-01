@@ -61,7 +61,7 @@ export default function Navbar() {
           <div className="w-12 h-12 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
             <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" sizes="(max-width: 640px) 48px, 48px" />
           </div>
-          <span className="font-display font-bold text-lg sm:text-xl gradient-text hidden sm:block">
+          <span className="font-display font-bold text-base sm:text-xl gradient-text whitespace-nowrap">
             SF Learners Hub
           </span>
         </Link>
@@ -183,7 +183,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden fixed inset-x-0 top-[56px] sm:top-[64px] z-40 border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-sky-600/95 backdrop-blur-xl animate-fade-in">
+        <div className="lg:hidden fixed inset-x-0 top-[56px] sm:top-[64px] z-40 border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-black/95 backdrop-blur-xl animate-fade-in">
           <div className="max-h-[calc(100vh-56px)] sm:max-h-[calc(100vh-64px)] overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-0.5 sm:space-y-1">
             <Link
               href="/"
