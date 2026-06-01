@@ -122,9 +122,8 @@ export default function HeroSection() {
         </p>
 
         {/* Home Video */}
-        <div className="max-w-4xl mx-auto mb-10 sm:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
-          {/* Home Video with Controls */}
-          <div className="group relative max-w-4xl mx-auto mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
+        <div className="max-w-4xl mx-auto mb-10 sm:mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
+          <div className="group relative">
             <video
               ref={videoRef}
               src="https://sflearnershub.com/wp-content/uploads/2026/01/m3raee3zxxrmr0cvga08nyg05m_result_.mp4"
