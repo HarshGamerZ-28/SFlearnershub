@@ -105,7 +105,7 @@ export default function ImageCarousel() {
                 src={image.src}
                 alt={image.alt}
                 fill
-                className="object-cover"
+                className="object-contain md:object-cover bg-slate-950"
                 priority={index === 0}
               />
               {/* Gradient overlay */}
