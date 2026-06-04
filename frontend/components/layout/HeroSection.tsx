@@ -24,6 +24,17 @@ export default function HeroSection() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [controlsVisible, setControlsVisible] = useState(true);
+  const hideTimeoutRef = useRef<NodeJS.Timeout>();
+
+  // Auto-hide controls after 3 seconds
+  const autoHideControls = () => {
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    setControlsVisible(true);
+    hideTimeoutRef.current = setTimeout(() => {
+      if (isPlaying) setControlsVisible(false);
+    }, 3000);
+  };
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -31,6 +42,14 @@ export default function HeroSection() {
     }, 2000);
     return () => clearInterval(intervalRef.current!);
   }, []);
+
+  // Clean up timeout
+  useEffect(() => {
+    autoHideControls();
+    return () => {
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    };
+  }, [isPlaying]);
 
   const togglePlay = () => {
     if (videoRef.current) {
@@ -40,6 +59,7 @@ export default function HeroSection() {
         videoRef.current.play();
       }
       setIsPlaying(!isPlaying);
+      autoHideControls();
     }
   };
 
@@ -135,42 +155,84 @@ export default function HeroSection() {
               className="w-full h-auto object-cover"
             />
 
-            {/* Custom Controls Overlay - Always visible on mobile */}
-            <div className="absolute inset-0 bg-black/10 sm:bg-black/20 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-6">
-              <div className="flex flex-col gap-2 sm:gap-4">
-                {/* Progress Line */}
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={progress}
-                  onChange={handleSeek}
-                  className="w-full h-1.5 sm:h-2 bg-white/20 rounded-lg sm:rounded-xl appearance-none cursor-pointer accent-brand-400"
-                />
+            {/* Video Controls - Clean & Simple */}
+            <div 
+              className="absolute inset-0 cursor-pointer"
+              onClick={autoHideControls}
+            >
+              {/* Big Center Play Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  togglePlay();
+                }}
+                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white transition-all duration-300 hover:scale-110 active:scale-95 z-20 ${!controlsVisible && isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                aria-label="Play/Pause"
+              >
+                {isPlaying ? (
+                  <Pause size={32} strokeWidth={2.5} fill="currentColor" />
+                ) : (
+                  <Play size={36} strokeWidth={2.5} fill="currentColor" className="ml-1" />
+                )}
+              </button>
 
-                <div className="flex items-center justify-between gap-2 sm:gap-4">
-                  <div className="flex items-center gap-2 sm:gap-4">
-                    <button onClick={togglePlay} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Play/Pause">
-                      {isPlaying ? <Pause size={22} fill="currentColor" /> : <Play size={22} fill="currentColor" />}
-                    </button>
+              {/* Bottom Controls Bar with Smooth Fade */}
+              <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 sm:p-6 transition-opacity duration-300 ${controlsVisible ? 'opacity-100' : 'opacity-0'}`}>
+                <div className="flex flex-col gap-3 max-w-full">
+                  {/* Progress Bar */}
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={progress}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleSeek(e);
+                      autoHideControls();
+                    }}
+                    className="w-full h-1 bg-white/30 rounded-full appearance-none cursor-pointer accent-brand-400 hover:accent-brand-300 transition-all"
+                  />
 
-                    <div className="flex items-center gap-1.5 sm:gap-3">
-                      <button onClick={() => skip(-10)} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Skip back 10s">
-                        <RotateCcw size={20} />
-                      </button>
-                      <button onClick={() => skip(10)} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Skip forward 10s">
-                        <RotateCw size={20} />
+                  {/* Control Buttons Row */}
+                  <div className="flex items-center justify-between gap-4">
+                    {/* Left Side - Play/Pause */}
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          togglePlay();
+                        }}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-white/20 text-white transition-all active:scale-95"
+                        aria-label="Play/Pause"
+                      >
+                        {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                       </button>
                     </div>
-                  </div>
 
-                  <div className="flex items-center gap-2 sm:gap-4">
-                    <button onClick={toggleMute} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Toggle mute">
-                      {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                    </button>
-                    <button onClick={toggleFullscreen} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Fullscreen">
-                      <Maximize size={20} />
-                    </button>
+                    {/* Right Side - Mute & Fullscreen */}
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleMute();
+                          autoHideControls();
+                        }}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-white/20 text-white transition-all active:scale-95"
+                        aria-label="Toggle mute"
+                      >
+                        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFullscreen();
+                        }}
+                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-white/20 text-white transition-all active:scale-95"
+                        aria-label="Fullscreen"
+                      >
+                        <Maximize size={20} />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
