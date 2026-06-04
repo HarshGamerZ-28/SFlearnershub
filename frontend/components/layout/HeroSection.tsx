@@ -84,7 +84,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-12 sm:pt-20 pb-12 sm:pb-16 px-4 sm:px-6">
+    <section className="relative overflow-hidden pt-10 sm:pt-16 md:pt-20 pb-10 sm:pb-14 md:pb-16 px-4 sm:px-6">
       {/* Grid bg */}
       <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
 
@@ -96,15 +96,15 @@ export default function HeroSection() {
 
 
         {/* Headline */}
-        <h1 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight sm:leading-[1.05] mb-4 sm:mb-6 animate-fade-up">
+        <h1 className="font-display font-extrabold text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight sm:leading-[1.05] mb-3 sm:mb-4 md:mb-6 animate-fade-up">
           Master{" "}
           <span className="gradient-text">Salesforce</span>,
-          <br />
+          <br className="hidden sm:block" />
           Conquer Your Goals
         </h1>
 
         {/* Animated subtag */}
-        <div className="flex flex-wrap items-center justify-center gap-1 mb-3 sm:mb-4 text-slate-400 text-sm sm:text-lg">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 mb-3 sm:mb-4 text-slate-400 text-sm sm:text-base md:text-lg">
           <span>Learn</span>
           <div className="relative w-min overflow-hidden">
             <span
@@ -117,12 +117,12 @@ export default function HeroSection() {
           <span>and more</span>
         </div>
 
-        <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 sm:mb-10 animate-fade-up stagger-2">
+        <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-7 sm:mb-9 md:mb-10 animate-fade-up stagger-2">
           Your ultimate Salesforce learning platform — from beginner admin guides to advanced integration patterns, all in one beautifully redesigned hub.
         </p>
 
         {/* Home Video */}
-        <div className="max-w-4xl mx-auto mb-10 sm:mb-16 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
+        <div className="max-w-4xl mx-auto mb-9 sm:mb-14 md:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
           <div className="group relative">
             <video
               ref={videoRef}
@@ -135,9 +135,9 @@ export default function HeroSection() {
               className="w-full h-auto object-cover"
             />
 
-            {/* Custom Controls Overlay */}
-            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-              <div className="flex flex-col gap-4">
+            {/* Custom Controls Overlay - Always visible on mobile */}
+            <div className="absolute inset-0 bg-black/10 sm:bg-black/20 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-6">
+              <div className="flex flex-col gap-2 sm:gap-4">
                 {/* Progress Line */}
                 <input
                   type="range"
@@ -145,30 +145,30 @@ export default function HeroSection() {
                   max="100"
                   value={progress}
                   onChange={handleSeek}
-                  className="w-full h-1.5 bg-white/20 rounded-lg appearance-none cursor-pointer accent-brand-400"
+                  className="w-full h-1.5 sm:h-2 bg-white/20 rounded-lg sm:rounded-xl appearance-none cursor-pointer accent-brand-400"
                 />
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <button onClick={togglePlay} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
-                      {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
+                <div className="flex items-center justify-between gap-2 sm:gap-4">
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <button onClick={togglePlay} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Play/Pause">
+                      {isPlaying ? <Pause size={22} fill="currentColor" /> : <Play size={22} fill="currentColor" />}
                     </button>
 
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => skip(-10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                    <div className="flex items-center gap-1.5 sm:gap-3">
+                      <button onClick={() => skip(-10)} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Skip back 10s">
                         <RotateCcw size={20} />
                       </button>
-                      <button onClick={() => skip(10)} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                      <button onClick={() => skip(10)} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Skip forward 10s">
                         <RotateCw size={20} />
                       </button>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4">
-                    <button onClick={toggleMute} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <button onClick={toggleMute} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Toggle mute">
                       {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                     </button>
-                    <button onClick={toggleFullscreen} className="p-2 rounded-full hover:bg-white/20 text-white transition-colors">
+                    <button onClick={toggleFullscreen} className="min-h-[48px] w-12 h-12 sm:w-auto sm:h-auto sm:p-3 rounded-full hover:bg-white/20 text-white transition-colors active:scale-95" aria-label="Fullscreen">
                       <Maximize size={20} />
                     </button>
                   </div>
@@ -179,30 +179,30 @@ export default function HeroSection() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 animate-fade-up stagger-3">
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-14 md:mb-16 animate-fade-up stagger-3">
           <Link
             href="/blog"
-            className="btn-glow w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold text-white"
+            className="btn-glow w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-base sm:text-base font-semibold text-white active:scale-95"
           >
             Explore Blogs
             <ArrowRight size={18} />
           </Link>
           <Link
             href="/category/blog/certification-preparation-materials"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-lg sm:rounded-xl text-sm sm:text-base font-medium text-slate-300 border border-[rgba(91,114,240,0.3)] hover:border-[rgba(91,114,240,0.6)] hover:bg-[rgba(91,114,240,0.07)] transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl text-base sm:text-base font-medium text-slate-300 border border-[rgba(91,114,240,0.3)] hover:border-[rgba(91,114,240,0.6)] hover:bg-[rgba(91,114,240,0.07)] transition-all active:scale-95"
           >
             Get Certified
-            <Star size={16} />
+            <Star size={18} />
           </Link>
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-2xl mx-auto animate-fade-up stagger-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-2xl mx-auto animate-fade-up stagger-4">
           {STATS.map((s) => (
-            <div key={s.label} className="glass rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center">
+            <div key={s.label} className="glass rounded-xl p-3 sm:p-4 text-center">
               <div className="flex justify-center text-brand-400 mb-1 sm:mb-2">{s.icon}</div>
-              <div className="font-display font-bold text-lg sm:text-2xl gradient-text">{s.value}</div>
-              <div className="text-slate-500 text-xs mt-0.5 sm:mt-1">{s.label}</div>
+              <div className="font-display font-bold text-xl sm:text-2xl gradient-text">{s.value}</div>
+              <div className="text-slate-500 text-xs sm:text-sm mt-1 sm:mt-1">{s.label}</div>
             </div>
           ))}
         </div>

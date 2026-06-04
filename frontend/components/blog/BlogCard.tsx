@@ -29,7 +29,7 @@ export default function BlogCard({ post, featured = false }: Props) {
       href={`/blog/${post.slug}`}
       className={clsx(
         "group flex flex-col glass rounded-2xl overflow-hidden transition-all duration-300",
-        "hover:border-[rgba(91,114,240,0.4)] hover:-translate-y-1 hover:shadow-card-hover focus-ring",
+        "hover:border-[rgba(91,114,240,0.4)] hover:-translate-y-1 hover:shadow-card-hover focus-ring active:scale-[0.99]",
         featured && "lg:flex-row"
       )}
     >
@@ -37,7 +37,7 @@ export default function BlogCard({ post, featured = false }: Props) {
       <div
         className={clsx(
           "relative overflow-hidden bg-gradient-to-br from-brand-900/40 to-violet-900/20",
-          featured ? "w-full lg:w-2/5 h-48 sm:h-64 lg:h-auto min-h-[200px]" : "h-44"
+          featured ? "w-full lg:w-2/5 h-40 xs:h-48 sm:h-56 md:h-64 lg:h-auto min-h-[200px]" : "h-36 xs:h-40 sm:h-44"
         )}
       >
         <Image
@@ -51,8 +51,9 @@ export default function BlogCard({ post, featured = false }: Props) {
           alt={post.title || "Blog Post"}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 420px) 100vw, (max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           priority={featured}
+          loading={featured ? "eager" : "lazy"}
         />
         
         {/* Overlay badges */}
@@ -76,7 +77,7 @@ export default function BlogCard({ post, featured = false }: Props) {
       </div>
 
       {/* Body */}
-      <div className="flex-1 p-5 flex flex-col">
+      <div className="flex-1 p-4 sm:p-5 flex flex-col">
         {/* Categories */}
         <div className="flex gap-2 flex-wrap mb-3">
           {post.categories.slice(0, 2).map((cat) => (
@@ -93,7 +94,7 @@ export default function BlogCard({ post, featured = false }: Props) {
         <h3
           className={clsx(
             "font-display font-bold text-white leading-snug mb-2 group-hover:text-brand-300 transition-colors",
-            featured ? "text-xl" : "text-base"
+            featured ? "text-lg xs:text-xl" : "text-sm xs:text-base"
           )}
         >
           {post.title}
