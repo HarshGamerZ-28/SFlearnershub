@@ -2,139 +2,195 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Zap, Twitter, Youtube, Linkedin, Facebook, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import { Twitter, Youtube, Linkedin, Facebook, Mail, ArrowRight, CheckCircle } from "lucide-react";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
+import { PLATFORM_FEATURES } from "@/lib/platformFeatures";
 
-const FOOTER_LINKS = {
-  "Salesforce Platform": [
-    { label: "Administration",    href: "/category/blog/salesforce-administration" },
-    { label: "Development",       href: "/category/blog/salesforce-development" },
-    { label: "LWC",               href: "/category/blog/lightning-web-components-lwc" },
-    { label: "Integration",       href: "/category/blog/salesforce-integration" },
-    { label: "DevOps",            href: "/category/blog/salesforce-deployment-devops" },
-  ],
-  "Study Resources": [
-    { label: "Certification Prep",href: "/category/blog/certification-preparation-materials" },
-    { label: "Interview Q&A",     href: "/category/blog/interview-questions-answers" },
-    { label: "Mock Tests",        href: "/category/blog/mock-tests-quizzes" },
-    { label: "Real-World Projects",href: "/category/blog/real-world-projects" },
-    { label: "Practice Questions",href: "/category/blog/practice-questions" },
-  ],
-  "Salesforce Products": [
-    { label: "Sales Cloud",       href: "/category/blog/sales-cloud" },
-    { label: "Service Cloud",     href: "/category/blog/service-cloud" },
-    { label: "Marketing Cloud",   href: "/category/blog/marketing-cloud" },
-    { label: "Omnistudio",        href: "/category/blog/salesforce-omnistudio" },
-    { label: "CPQ",               href: "/category/blog/salesforce-cpq" },
-  ],
-};
+const FOOTER_CATEGORIES = [
+  { label: "Administration", href: "/category/blog/salesforce-administration" },
+  { label: "Development", href: "/category/blog/salesforce-development" },
+  { label: "LWC", href: "/category/blog/lightning-web-components-lwc" },
+  { label: "Integration", href: "/category/blog/salesforce-integration" },
+  { label: "DevOps", href: "/category/blog/salesforce-deployment-devops" },
+  { label: "Certification Prep", href: "/category/blog/certification-preparation-materials" },
+];
+
+const FOOTER_COMPANY = [
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Search", href: "/search" },
+  { label: "Sign In", href: "/auth/login" },
+];
 
 export default function Footer() {
-  const [email, setEmail]     = useState("");
-  const [done, setDone]       = useState(false);
+  const [email, setEmail] = useState("");
+  const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
     setLoading(true);
-    // POST /api/subscribers
     await new Promise(r => setTimeout(r, 800));
     setDone(true);
     setLoading(false);
   };
 
   return (
-    <footer className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.12)] bg-slate-50 dark:bg-dark-800/50 mt-12 sm:mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-14">
-        {/* Newsletter Section */}
-        <div className="mb-8 sm:mb-12 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-brand-50 to-violet-50 dark:from-brand-900/40 dark:to-violet-900/30 border border-brand-200 dark:border-[rgba(91,114,240,0.15)]">
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-            <div className="max-w-xl">
-              <h3 className="font-display font-semibold text-base sm:text-lg text-white mb-1">Stay Updated</h3>
-              <p className="text-xs sm:text-sm text-slate-400">Get the latest Salesforce insights delivered to your inbox.</p>
-            </div>
-            {done ? (
-              <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-sm font-semibold whitespace-nowrap">
-                <CheckCircle size={18} /> You&apos;re subscribed!
+    <>
+      <footer className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.12)] bg-slate-100/80 dark:bg-dark-800/60 mt-12 sm:mt-16 pb-16 lg:pb-0">
+        {/* Newsletter band */}
+        <div className="border-b border-slate-200 dark:border-[rgba(91,114,240,0.1)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+            <div className="glass rounded-2xl p-5 sm:p-6 border border-[rgba(91,114,240,0.12)]">
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+                <div className="max-w-md">
+                  <h3 className="font-display font-semibold text-base sm:text-lg text-slate-900 dark:text-white mb-1">
+                    Stay Updated
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                    Get the latest Salesforce insights delivered to your inbox.
+                  </p>
+                </div>
+                {done ? (
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-500 dark:text-emerald-400 text-sm font-semibold whitespace-nowrap">
+                    <CheckCircle size={18} /> You&apos;re subscribed!
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full lg:w-auto lg:min-w-[420px]">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      required
+                      placeholder="your@email.com"
+                      className="flex-1 min-h-[44px] px-4 py-2.5 bg-white dark:bg-dark-800/60 border border-slate-300 dark:border-[rgba(91,114,240,0.25)] rounded-xl text-base text-slate-900 dark:text-white placeholder:text-slate-400 outline-none focus:border-brand-400 transition-all"
+                    />
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="btn-glow inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 rounded-xl text-sm font-semibold text-white disabled:opacity-60 whitespace-nowrap active:scale-95"
+                    >
+                      {loading ? "Subscribing…" : <>Subscribe <ArrowRight size={15} className="ml-1.5" /></>}
+                    </button>
+                  </form>
+                )}
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                  placeholder="your@email.com"
-                  className="flex-1 min-h-[48px] px-4 py-3 bg-white dark:bg-dark-800/60 border border-slate-300 dark:border-[rgba(91,114,240,0.25)] rounded-xl text-base text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none focus:border-brand-400 dark:focus:border-[rgba(91,114,240,0.5)] transition-all"
-                />
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-glow inline-flex items-center justify-center min-h-[48px] px-5 py-3 rounded-xl text-base font-semibold text-white disabled:opacity-60 whitespace-nowrap active:scale-95"
-                >
-                  {loading ? "Subscribing…" : <><span>Subscribe</span> <ArrowRight size={16} className="ml-1" /></>}
-                </button>
-              </form>
-            )}
+            </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-10 mb-8 sm:mb-10">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="flex items-center gap-3 mb-5 min-h-[48px]">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
-                <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" sizes="(max-width: 640px) 48px, 56px" />
-              </div>
-              <span className="font-display font-bold text-lg sm:text-base md:text-lg gradient-text">SF Learners Hub</span>
-            </Link>
-            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-5">
-              Your premier Salesforce learning destination. All content migrated from the original WordPress site with full SEO preservation.
-            </p>
-            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-5">
-              Empowering Salesforce professionals with in-depth tutorials, certification resources, and real-world guides — from Admin fundamentals to advanced Apex development.
-            </p>
-            <div className="flex gap-2 sm:gap-3">
-              {[
-                { icon: <Twitter size={17} />, href: "https://x.com/SFLearnersHub", label: "Twitter", color: "hover:bg-sky-500/10 hover:text-sky-500 hover:border-sky-500/30" },
-                { icon: <Youtube size={17} />, href: "https://www.youtube.com/channel/UCYDK82lewStiUKKL3zhxBGg", label: "YouTube", color: "hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/30" },
-                { icon: <Linkedin size={17} />, href: "https://www.linkedin.com/company/sflearnershub/", label: "LinkedIn", color: "hover:bg-blue-500/10 hover:text-blue-500 hover:border-blue-500/30" },
-                { icon: <Facebook size={17} />, href: "https://www.facebook.com/people/SF-Learners-Hub/61555359370537/", label: "Facebook", color: "hover:bg-blue-600/10 hover:text-blue-600 hover:border-blue-600/30" },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`compact-btn w-10 h-10 sm:w-11 sm:h-11 glass rounded-xl flex items-center justify-center text-slate-500 transition-all active:scale-95 border border-transparent ${s.color}`}
-                  aria-label={`SF Learners Hub on ${s.label}`}
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </div>
-          </div>
 
-          {/* Links */}
-          {Object.entries(FOOTER_LINKS).map(([section, links]) => (
-            <div key={section}>
-              <h3 className="font-display font-semibold text-sm sm:text-base text-white mb-3 sm:mb-4">{section}</h3>
-              <ul className="space-y-2 sm:space-y-2.5">
-                {links.map((link) => (
+        {/* Main footer grid — apex-style columns */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10">
+            {/* Brand column */}
+            <div className="lg:col-span-2">
+              <Link href="/" className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-full overflow-hidden relative shrink-0 shadow-sm shadow-brand-500/20">
+                  <Image src="/logo.jpg" alt="SF Learners Hub" fill className="object-cover scale-[1.18]" sizes="44px" />
+                </div>
+                <span className="font-display font-bold text-lg gradient-text">SF Learners Hub</span>
+              </Link>
+              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-5 max-w-sm">
+                Build. Learn. Master Salesforce. Your premier destination for tutorials, certification prep, and real-world guides.
+              </p>
+              <div className="flex gap-2">
+                {[
+                  { icon: Twitter, href: "https://x.com/SFLearnersHub", label: "Twitter", hover: "hover:text-sky-500 hover:border-sky-500/30" },
+                  { icon: Youtube, href: "https://www.youtube.com/channel/UCYDK82lewStiUKKL3zhxBGg", label: "YouTube", hover: "hover:text-red-500 hover:border-red-500/30" },
+                  { icon: Linkedin, href: "https://www.linkedin.com/company/sflearnershub/", label: "LinkedIn", hover: "hover:text-blue-500 hover:border-blue-500/30" },
+                  { icon: Facebook, href: "https://www.facebook.com/people/SF-Learners-Hub/61555359370537/", label: "Facebook", hover: "hover:text-blue-600 hover:border-blue-600/30" },
+                ].map(({ icon: Icon, href, label, hover }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className={`compact-btn w-9 h-9 glass rounded-lg flex items-center justify-center text-slate-500 border border-transparent transition-all ${hover}`}
+                  >
+                    <Icon size={16} />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Platform features column */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-brand-500 dark:text-brand-400 mb-4">
+                Platform
+              </h3>
+              <ul className="space-y-2.5">
+                {PLATFORM_FEATURES.map((f) => (
+                  <li key={f.id}>
+                    <Link href={f.href} className="nav-menu-link text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-300 transition-colors py-0.5">
+                      {f.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Categories column */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-brand-500 dark:text-brand-400 mb-4">
+                Categories
+              </h3>
+              <ul className="space-y-2.5">
+                {FOOTER_CATEGORIES.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="min-h-[36px] flex items-center text-sm sm:text-base text-slate-500 hover:text-slate-200 transition-colors">
+                    <Link href={link.href} className="nav-menu-link text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-300 transition-colors py-0.5">
                       {link.label}
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-          ))}
+
+            {/* Company column */}
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-brand-500 dark:text-brand-400 mb-4">
+                Company
+              </h3>
+              <ul className="space-y-2.5">
+                {FOOTER_COMPANY.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="nav-menu-link text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-300 transition-colors py-0.5">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className="text-xs font-bold uppercase tracking-[0.18em] text-brand-500 dark:text-brand-400 mb-3 mt-6">
+                Contact
+              </h3>
+              <a
+                href="mailto:info@sflearnershub.com"
+                className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-300 transition-colors"
+              >
+                <Mail size={14} />
+                info@sflearnershub.com
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div className="border-t border-[rgba(91,114,240,0.08)] pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-3 text-xs sm:text-sm text-slate-600">
-          <p>© {new Date().getFullYear()} SF Learners Hub. All rights reserved.</p>
+        {/* Bottom bar */}
+        <div className="border-t border-slate-200 dark:border-[rgba(91,114,240,0.08)]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs sm:text-sm text-slate-500 dark:text-slate-500">
+            <p>© {new Date().getFullYear()} SF Learners Hub. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+              <Link href="/about" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">About</Link>
+              <Link href="/contact" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">Privacy</Link>
+              <Link href="/contact" className="hover:text-slate-700 dark:hover:text-slate-300 transition-colors">Terms</Link>
+            </div>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+
+      <MobileBottomNav />
+    </>
   );
 }

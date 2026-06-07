@@ -1,10 +1,10 @@
-import { BookOpen, Zap, Users, Star } from "lucide-react";
+import { BookOpen, Zap, Users, Trophy } from "lucide-react";
 
 const STATS = [
+  { value: "50K+", label: "Registered Learners", icon: Users },
   { value: "842+", label: "Blog Posts", icon: BookOpen },
   { value: "18",   label: "Categories", icon: Zap },
-  { value: "50K+", label: "Learners",   icon: Users },
-  { value: "4.9",  label: "Rating",     icon: Star },
+  { value: "Free", label: "Always Free", icon: Trophy },
 ];
 
 export default function HomeStats() {

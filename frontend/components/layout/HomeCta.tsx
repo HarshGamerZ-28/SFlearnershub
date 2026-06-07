@@ -13,10 +13,10 @@ export default function HomeCta() {
         </p>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-5">
           <Link
-            href="/blog"
+            href="/auth/login"
             className="btn-glow inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl text-base font-semibold text-white active:scale-95"
           >
-            Explore Blogs
+            Create Free Account
             <ArrowRight size={18} />
           </Link>
           <Link
@@ -28,7 +28,7 @@ export default function HomeCta() {
           </Link>
         </div>
         <p className="text-xs text-slate-500 dark:text-slate-500">
-          Free resources · Expert guides · Join 50K+ learners
+          No credit card required · Free forever · Join 50K+ learners
         </p>
       </div>
     </section>

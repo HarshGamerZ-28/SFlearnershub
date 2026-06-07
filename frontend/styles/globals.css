@@ -339,6 +339,11 @@ html:not(.dark) header .hover\:text-white:hover {
   animation: slideInFromRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Safe area for mobile bottom nav */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
 /* Desktop native fullscreen for hero video */
 .hero-video-shell:fullscreen {
   max-width: none;
