@@ -1,14 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Zap, BookOpen, Users, Star, Play, Pause, Volume2, VolumeX, RotateCcw, RotateCw, Maximize, Minimize, X } from "lucide-react";
-
-const STATS = [
-  { value: "842+", label: "Blog Posts", icon: <BookOpen size={16} /> },
-  { value: "18",   label: "Categories", icon: <Zap size={16} /> },
-  { value: "50K+", label: "Learners",   icon: <Users size={16} /> },
-  { value: "4.9",  label: "Rating",     icon: <Star size={16} /> },
-];
+import { ArrowRight, Star, Play, Pause, Volume2, VolumeX, RotateCcw, RotateCw, Maximize, Minimize, X } from "lucide-react";
 
 const TAGS = [
   "Apex Triggers", "SOQL", "LWC", "REST API", "OAuth 2.0",
@@ -140,7 +133,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-8 sm:pt-16 md:pt-20 pb-8 sm:pb-14 md:pb-16 px-4 sm:px-6">
+    <section className="relative overflow-hidden pt-8 sm:pt-12 pb-6 sm:pb-10 px-4 sm:px-6">
       <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
       <div className="hidden sm:block absolute top-20 left-1/4 w-64 h-64 bg-brand-600/10 rounded-full blur-3xl animate-float pointer-events-none" />
       <div className="hidden sm:block absolute bottom-10 right-1/4 w-48 h-48 bg-violet-600/10 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: "3s" }} />
@@ -163,9 +156,27 @@ export default function HeroSection() {
           <span>and more</span>
         </div>
 
-        <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 sm:mb-9 md:mb-10 animate-fade-up stagger-2">
+        <p className="text-slate-400 text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-6 sm:mb-8 animate-fade-up stagger-2">
           Your ultimate Salesforce learning platform — from beginner admin guides to advanced integration patterns, all in one beautifully redesigned hub.
         </p>
+
+        {/* CTA Buttons — before video, matching apex-style hero flow */}
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 animate-fade-up stagger-3">
+          <Link
+            href="/blog"
+            className="btn-glow w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl text-base font-semibold text-white active:scale-95"
+          >
+            Explore Blogs
+            <ArrowRight size={18} />
+          </Link>
+          <Link
+            href="/category/blog/certification-preparation-materials"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl text-base font-medium text-slate-300 border border-[rgba(91,114,240,0.3)] hover:border-[rgba(91,114,240,0.6)] hover:bg-[rgba(91,114,240,0.07)] transition-all active:scale-95"
+          >
+            Get Certified
+            <Star size={18} />
+          </Link>
+        </div>
 
         {/* Placeholder keeps page layout stable when video goes fullscreen on mobile */}
         {isExpanded && <div className="aspect-video mb-8 sm:mb-16 max-w-4xl mx-auto" aria-hidden="true" />}
@@ -176,7 +187,7 @@ export default function HeroSection() {
           className={
             isExpanded
               ? "fixed inset-0 z-[300] flex flex-col bg-black"
-              : "hero-video-shell relative max-w-4xl mx-auto mb-8 sm:mb-16 rounded-xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] animate-fade-up stagger-3"
+              : "hero-video-shell relative max-w-4xl mx-auto rounded-xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] animate-fade-up stagger-3"
           }
           onMouseMove={autoHideControls}
           onTouchStart={autoHideControls}
@@ -278,35 +289,6 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-14 md:mb-16 animate-fade-up stagger-3">
-          <Link
-            href="/blog"
-            className="btn-glow w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl text-base font-semibold text-white active:scale-95"
-          >
-            Explore Blogs
-            <ArrowRight size={18} />
-          </Link>
-          <Link
-            href="/category/blog/certification-preparation-materials"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-xl text-base font-medium text-slate-300 border border-[rgba(91,114,240,0.3)] hover:border-[rgba(91,114,240,0.6)] hover:bg-[rgba(91,114,240,0.07)] transition-all active:scale-95"
-          >
-            Get Certified
-            <Star size={18} />
-          </Link>
-        </div>
-
-        {/* Stats row */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-2xl mx-auto animate-fade-up stagger-4">
-          {STATS.map((s) => (
-            <div key={s.label} className="glass rounded-xl p-3 sm:p-4 text-center">
-              <div className="flex justify-center text-brand-400 mb-1 sm:mb-2">{s.icon}</div>
-              <div className="font-display font-bold text-lg sm:text-2xl gradient-text">{s.value}</div>
-              <div className="text-slate-500 text-xs sm:text-sm mt-1">{s.label}</div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

@@ -1,12 +1,12 @@
 "use client";
-// components/blog/CategoryGrid.tsx
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Settings, Code2, Zap, GitBranch, Link2, GraduationCap,
   Megaphone, Package, Award, MessageSquare, ClipboardCheck,
-  Briefcase, HelpCircle, BarChart2, Headphones, Mail, Layers, DollarSign
+  Briefcase, HelpCircle, BarChart2, Headphones, Mail, Layers, DollarSign, ArrowRight
 } from "lucide-react";
+import SectionLabel from "@/components/layout/SectionLabel";
 import { categoryApi, type Category } from "@/lib/api";
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -30,6 +30,18 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   DollarSign:      <DollarSign size={22} />,
 };
 
+function categoryTags(cat: Category): string[] {
+  if (cat.description) {
+    const words = cat.description
+      .replace(/[.,]/g, "")
+      .split(/\s+/)
+      .filter((w) => w.length > 3)
+      .slice(0, 3);
+    if (words.length >= 2) return words;
+  }
+  return cat.name.split(/[\s&]+/).filter(Boolean).slice(0, 3);
+}
+
 export function CategoryGrid() {
   const [cats, setCats] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,36 +54,59 @@ export function CategoryGrid() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display text-2xl font-bold">Browse by Category</h2>
-        <Link href="/blog" className="text-sm text-brand-400 hover:text-brand-300 transition-colors">
-          All blogs →
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5 sm:mb-6">
+        <SectionLabel className="mb-0">Browse by Category</SectionLabel>
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-brand-500 dark:text-brand-400 hover:text-brand-600 dark:hover:text-brand-300 transition-colors sm:mb-1"
+        >
+          All blogs
+          <ArrowRight size={14} />
         </Link>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="skeleton h-24 rounded-2xl" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 9 }).map((_, i) => (
+            <div key={i} className="skeleton h-36 rounded-2xl" />
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 lg:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {cats.slice(0, 10).map((cat) => (
             <Link
               key={cat.id}
               href={`/category/blog/${cat.slug}`}
-              className="group glass rounded-2xl p-4 flex flex-col items-center text-center hover:-translate-y-1 hover:border-[rgba(91,114,240,0.4)] focus-ring transition-all duration-300"
+              className="group glass rounded-2xl p-5 sm:p-6 hover:-translate-y-0.5 hover:border-[rgba(91,114,240,0.4)] focus-ring transition-all duration-300"
             >
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center mb-3 transition-all group-hover:scale-110"
-                style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}35`, color: cat.color }}
-              >
-                {cat.icon ? ICON_MAP[cat.icon] || <Zap size={20} /> : <Zap size={20} />}
+              <div className="flex items-start gap-3 mb-3">
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105"
+                  style={{ background: `${cat.color}18`, border: `1px solid ${cat.color}35`, color: cat.color }}
+                >
+                  {cat.icon ? ICON_MAP[cat.icon] || <Zap size={20} /> : <Zap size={20} />}
+                </div>
+                <h3 className="font-display font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors leading-snug pt-1">
+                  {cat.name}
+                </h3>
               </div>
-              <span className="text-xs font-semibold text-slate-300 group-hover:text-white transition-colors leading-tight">
-                {cat.name}
-              </span>
+
+              {cat.description && (
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                  {cat.description}
+                </p>
+              )}
+
+              <div className="flex flex-wrap gap-1.5">
+                {categoryTags(cat).map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-dark-600 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-dark-400"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </Link>
           ))}
         </div>

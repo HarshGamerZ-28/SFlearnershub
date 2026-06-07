@@ -1,11 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Star } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import SectionLabel from "@/components/layout/SectionLabel";
 import BlogCard from "./BlogCard";
 import { blogApi, type Post } from "@/lib/api";
 
 export function FeaturedBlogs() {
-  const [posts, setPosts]   = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,13 +18,19 @@ export function FeaturedBlogs() {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4 sm:mb-6">
-        <Star size={18} className="text-brand-400" />
-        <h2 className="font-display text-xl sm:text-2xl font-bold">Featured Articles</h2>
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5 sm:mb-6">
+        <SectionLabel className="mb-0">Featured Articles</SectionLabel>
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-brand-500 dark:text-brand-400 hover:text-brand-600 dark:hover:text-brand-300 transition-colors sm:mb-1"
+        >
+          View all articles
+          <ArrowRight size={14} />
+        </Link>
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
           {Array.from({ length: 6 }).map((_, i) => (
             <div key={i} className="skeleton h-72 rounded-xl sm:rounded-2xl" style={{ animationDelay: `${i * 0.08}s` }} />
           ))}
