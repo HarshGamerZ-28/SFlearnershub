@@ -142,8 +142,8 @@ export default function HeroSection() {
         </p>
 
         {/* Home Video */}
-        <div className="max-w-4xl mx-auto mb-9 sm:mb-14 md:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] border border-white/10 animate-fade-up stagger-3">
-          <div className="group relative">
+        <div className="max-w-4xl mx-auto mb-10 sm:mb-16 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(91,114,240,0.3)] animate-fade-up stagger-3">
+          <div className="group relative bg-black">
             <video
               ref={videoRef}
               src="https://sflearnershub.com/wp-content/uploads/2026/01/m3raee3zxxrmr0cvga08nyg05m_result_.mp4"
@@ -155,84 +155,88 @@ export default function HeroSection() {
               className="w-full h-auto object-cover"
             />
 
-            {/* Video Controls - Clean & Simple */}
-            <div 
-              className="absolute inset-0 cursor-pointer"
-              onClick={autoHideControls}
-            >
-              {/* Big Center Play Button */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  togglePlay();
-                }}
-                className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white transition-all duration-300 hover:scale-110 active:scale-95 z-20 ${!controlsVisible && isPlaying ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
-                aria-label="Play/Pause"
-              >
-                {isPlaying ? (
-                  <Pause size={32} strokeWidth={2.5} fill="currentColor" />
-                ) : (
-                  <Play size={36} strokeWidth={2.5} fill="currentColor" className="ml-1" />
-                )}
-              </button>
+            {/* Video Controls Overlay */}
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 sm:p-6">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                {/* Progress Bar */}
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={progress}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    handleSeek(e);
+                  }}
+                  className="w-full h-1.5 sm:h-2 bg-white/30 hover:bg-white/50 rounded-full appearance-none cursor-pointer accent-brand-400 hover:accent-brand-300 transition-all [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:transition-all [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:shadow-lg"
+                />
 
-              {/* Bottom Controls Bar with Smooth Fade */}
-              <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 sm:p-6 transition-opacity duration-300 ${controlsVisible ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="flex flex-col gap-3 max-w-full">
-                  {/* Progress Bar */}
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={progress}
-                    onChange={(e) => {
-                      e.stopPropagation();
-                      handleSeek(e);
-                      autoHideControls();
-                    }}
-                    className="w-full h-1 bg-white/30 rounded-full appearance-none cursor-pointer accent-brand-400 hover:accent-brand-300 transition-all"
-                  />
+                {/* Control Buttons */}
+                <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        togglePlay();
+                      }}
+                      className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-full bg-white hover:bg-white/90 active:bg-white/80 text-black border border-white/40 transition-all duration-200 active:scale-95 backdrop-blur-sm"
+                      aria-label="Play/Pause"
+                      title={isPlaying ? "Pause" : "Play"}
+                    >
+                      {isPlaying ? (
+                        <Pause size={20} fill="currentColor" />
+                      ) : (
+                        <Play size={20} fill="currentColor" className="ml-0.5" />
+                      )}
+                    </button>
 
-                  {/* Control Buttons Row */}
-                  <div className="flex items-center justify-between gap-4">
-                    {/* Left Side - Play/Pause */}
-                    <div className="flex items-center gap-3">
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          togglePlay();
-                        }}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-white/20 text-white transition-all active:scale-95"
-                        aria-label="Play/Pause"
-                      >
-                        {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
-                      </button>
-                    </div>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        skip(-10);
+                      }}
+                      className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-full bg-black/40 hover:bg-black/60 active:bg-black/80 text-white border border-white/20 hover:border-white/40 transition-all duration-200 active:scale-95 backdrop-blur-sm"
+                      aria-label="Rewind 10 seconds"
+                      title="Rewind 10s"
+                    >
+                      <RotateCcw size={18} />
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        skip(10);
+                      }}
+                      className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-full bg-black/40 hover:bg-black/60 active:bg-black/80 text-white border border-white/20 hover:border-white/40 transition-all duration-200 active:scale-95 backdrop-blur-sm"
+                      aria-label="Forward 10 seconds"
+                      title="Forward 10s"
+                    >
+                      <RotateCw size={18} />
+                    </button>
+                  </div>
 
-                    {/* Right Side - Mute & Fullscreen */}
-                    <div className="flex items-center gap-3">
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMute();
-                          autoHideControls();
-                        }}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-white/20 text-white transition-all active:scale-95"
-                        aria-label="Toggle mute"
-                      >
-                        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                      </button>
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleFullscreen();
-                        }}
-                        className="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-white/20 text-white transition-all active:scale-95"
-                        aria-label="Fullscreen"
-                      >
-                        <Maximize size={20} />
-                      </button>
-                    </div>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleMute();
+                      }}
+                      className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-full bg-black/40 hover:bg-black/60 active:bg-black/80 text-white border border-white/20 hover:border-white/40 transition-all duration-200 active:scale-95 backdrop-blur-sm"
+                      aria-label="Toggle mute"
+                      title={isMuted ? "Unmute" : "Mute"}
+                    >
+                      {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFullscreen();
+                      }}
+                      className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-full bg-black/40 hover:bg-black/60 active:bg-black/80 text-white border border-white/20 hover:border-white/40 transition-all duration-200 active:scale-95 backdrop-blur-sm"
+                      aria-label="Fullscreen"
+                      title="Fullscreen"
+                    >
+                      <Maximize size={20} />
+                    </button>
                   </div>
                 </div>
               </div>

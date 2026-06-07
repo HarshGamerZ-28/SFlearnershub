@@ -149,8 +149,8 @@ export default function Navbar() {
           {/* Mobile menu */}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden w-12 h-12 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white focus-ring transition-all active:scale-95"
-            aria-label="Toggle navigation menu"
+            className="lg:hidden w-9 h-9 rounded-lg glass flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300"
+            aria-label="Toggle menu"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -185,57 +185,57 @@ export default function Navbar() {
       )}
 
       {/* Mobile menu */}
-      {open && (
-        <div className="lg:hidden fixed inset-x-0 top-[60px] sm:top-[68px] z-40 border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-black/95 backdrop-blur-xl animate-fade-in">
-          <div className="max-h-[calc(100vh-60px)] sm:max-h-[calc(100vh-68px)] overflow-y-auto px-4 py-4 space-y-1">
-            <Link
-              href="/"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 min-h-[48px] rounded-lg text-base text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95"
-            >
-              Home
-            </Link>
-            
-            <div className="px-4 py-2 mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Blog
-            </div>
-            {BLOG_CATEGORIES.map((item) => (
-              <Link
-                key={item.slug}
-                href={`/category/blog/${item.slug}`}
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-3 pl-6 pr-4 py-3 min-h-[48px] rounded-lg text-base text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95"
-              >
-                {item.name}
-              </Link>
-            ))}
-
-            <div className="h-px bg-slate-200 dark:bg-white/5 my-3" />
-
-            <Link
-              href="/about"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 min-h-[48px] rounded-lg text-base text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95"
-            >
-              About Us
-            </Link>
-            <Link
-              href="/gallery"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 min-h-[48px] rounded-lg text-base text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95"
-            >
-              Gallery
-            </Link>
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 min-h-[48px] rounded-lg text-base text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all active:scale-95"
-            >
-              Contact Us
-            </Link>
+      <div
+        className={`lg:hidden fixed inset-x-0 top-[56px] sm:top-[64px] z-40 border-t border-slate-200 dark:border-[rgba(91,114,240,0.15)] bg-black/95 backdrop-blur-xl transition-all duration-300 ease-out transform ${open ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-4 opacity-0 pointer-events-none"}`}
+      >
+        <div className="max-h-[calc(100vh-56px)] sm:max-h-[calc(100vh-64px)] overflow-y-auto px-3 sm:px-4 py-3 sm:py-4 space-y-0.5 sm:space-y-1">
+          <Link
+            href="/"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 sm:py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
+          >
+            Home
+          </Link>
+          
+          <div className="px-3 py-1.5 sm:py-2 mt-1 sm:mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+            Blog
           </div>
+          {BLOG_CATEGORIES.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/category/blog/${item.slug}`}
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 pl-5 sm:pl-6 pr-3 py-2 sm:py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
+            >
+              {item.name}
+            </Link>
+          ))}
+
+          <div className="h-px bg-slate-200 dark:bg-white/5 my-2" />
+
+          <Link
+            href="/about"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 sm:py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
+          >
+            About Us
+          </Link>
+          <Link
+            href="/gallery"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 sm:py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
+          >
+            Gallery
+          </Link>
+          <Link
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 sm:py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-all"
+          >
+            Contact Us
+          </Link>
         </div>
-      )}
+      </div>
     </header>
   );
 }
