@@ -136,7 +136,7 @@ export default function AdminDashboard() {
               <button
                 key={item.id}
                 onClick={() => { setView(item.id); setSideOpen(false); }}
-                className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm transition-all border-l-2 ${
+                className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm transition-all border-l-2 focus-ring ${
                   view === item.id
                     ? "bg-brand-600/10 text-white border-brand-500"
                     : "text-slate-400 hover:text-white hover:bg-white/5 border-transparent"
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
               </button>
             ))}
             <div className="px-4 pt-4 pb-2 text-xs font-semibold text-slate-600 uppercase tracking-wider">System</div>
-            <button className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent transition-all">
+            <button className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent focus-ring transition-all">
               <Settings size={16} /> Settings
             </button>
           </nav>
@@ -196,7 +196,7 @@ export default function AdminDashboard() {
                     { label: "Upload Thumbnail",    icon: <ImageIcon size={14} />,action: () => setView("media") },
                   ].map((a) => (
                     <button key={a.label} onClick={a.action}
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass text-sm text-slate-300 hover:text-white hover:border-[rgba(91,114,240,0.4)] transition-all">
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass text-sm text-slate-300 hover:text-white hover:border-[rgba(91,114,240,0.4)] focus-ring transition-all">
                       <span className="text-brand-400">{a.icon}</span>
                       {a.label}
                     </button>
