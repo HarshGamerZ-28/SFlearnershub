@@ -324,6 +324,21 @@ html:not(.dark) header .hover\:text-white:hover {
   min-width: unset !important;
 }
 
+/* Nav menu links — full width row, not square touch targets */
+.nav-menu-link {
+  min-height: unset !important;
+  min-width: unset !important;
+  width: 100%;
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+.slide-in-right {
+  animation: slideInFromRight 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* ── Mobile Optimizations ──────────────────────────────────── */
 @media (max-width: 640px) {
   /* Better touch targets on mobile — skip compact/decorative controls */
