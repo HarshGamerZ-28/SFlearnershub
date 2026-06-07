@@ -93,18 +93,20 @@ export default function Footer() {
             <p className="text-slate-500 text-xs sm:text-sm leading-relaxed mb-5">
               Empowering Salesforce professionals with in-depth tutorials, certification resources, and real-world guides — from Admin fundamentals to advanced Apex development.
             </p>
-            <div className="flex gap-2.5 sm:gap-3">
+            <div className="flex gap-2 sm:gap-3">
               {[
-                { icon: <Twitter size={18} />, href: "https://x.com/SFLearnersHub" },
-                { icon: <Youtube size={18} />, href: "https://www.youtube.com/channel/UCYDK82lewStiUKKL3zhxBGg" },
-                { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/company/sflearnershub/" },
-                { icon: <Facebook size={18} />, href: "https://www.facebook.com/people/SF-Learners-Hub/61555359370537/" },
-              ].map((s, i) => (
+                { icon: <Twitter size={17} />, href: "https://x.com/SFLearnersHub", label: "Twitter", color: "hover:bg-sky-500/10 hover:text-sky-500 hover:border-sky-500/30" },
+                { icon: <Youtube size={17} />, href: "https://www.youtube.com/channel/UCYDK82lewStiUKKL3zhxBGg", label: "YouTube", color: "hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/30" },
+                { icon: <Linkedin size={17} />, href: "https://www.linkedin.com/company/sflearnershub/", label: "LinkedIn", color: "hover:bg-blue-500/10 hover:text-blue-500 hover:border-blue-500/30" },
+                { icon: <Facebook size={17} />, href: "https://www.facebook.com/people/SF-Learners-Hub/61555359370537/", label: "Facebook", color: "hover:bg-blue-600/10 hover:text-blue-600 hover:border-blue-600/30" },
+              ].map((s) => (
                 <a
-                  key={i}
+                  key={s.label}
                   href={s.href}
-                  className="w-11 h-11 glass rounded-xl flex items-center justify-center text-slate-500 hover:text-slate-800 dark:hover:text-white hover:border-slate-400 dark:hover:border-[rgba(91,114,240,0.4)] transition-all active:scale-95"
-                  aria-label={`SF Learners Hub on ${['Twitter', 'YouTube', 'LinkedIn', 'Facebook'][i]}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`compact-btn w-10 h-10 sm:w-11 sm:h-11 glass rounded-xl flex items-center justify-center text-slate-500 transition-all active:scale-95 border border-transparent ${s.color}`}
+                  aria-label={`SF Learners Hub on ${s.label}`}
                 >
                   {s.icon}
                 </a>

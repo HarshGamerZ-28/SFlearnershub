@@ -163,12 +163,12 @@ export default function BlogDetailClient({ post, related }: Props) {
 
         {/* Article Header */}
         <article className="mb-8">
-          <h1 className="font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl leading-tight text-slate-900 dark:text-white mb-6 break-words">
+          <h1 className="font-display font-extrabold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl leading-tight text-slate-900 dark:text-white mb-5 sm:mb-6 break-words">
             {post.title}
           </h1>
 
           {/* Article Metadata */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 text-sm pb-6 mb-6 border-b border-[rgba(91,114,240,0.12)]">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 sm:grid sm:grid-cols-4 text-sm pb-5 sm:pb-6 mb-5 sm:mb-6 border-b border-[rgba(91,114,240,0.12)]">
             <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
               <span className={`text-xs font-bold px-2 py-1 rounded-md font-mono w-fit ${diff.cls}`}>
                 {diff.label}
@@ -221,12 +221,27 @@ export default function BlogDetailClient({ post, related }: Props) {
 
           {/* YouTube Video */}
           {ytId && (
-            <div className="mb-8 rounded-2xl overflow-hidden border border-[rgba(91,114,240,0.2)] shadow-lg bg-black">
-              <div className="flex items-center gap-2 px-4 py-3 bg-slate-100 dark:bg-dark-700 border-b border-[rgba(91,114,240,0.12)]">
-                <Youtube size={16} className="text-red-500" />
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">Video Tutorial</span>
+            <div className="mb-8 rounded-xl sm:rounded-2xl overflow-hidden border border-[rgba(91,114,240,0.2)] shadow-lg bg-black">
+              <div className="flex items-center justify-between gap-3 px-4 py-3 bg-gradient-to-r from-red-600/10 to-transparent dark:from-red-600/20 border-b border-[rgba(91,114,240,0.12)]">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-red-600 text-white shrink-0">
+                    <Youtube size={18} />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">Video Tutorial</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Watch along with this article</p>
+                  </div>
+                </div>
+                <a
+                  href={post.youtube_url!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="compact-btn hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-red-600 dark:text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-all"
+                >
+                  Open on YouTube
+                </a>
               </div>
-              <div className="aspect-video bg-black flex items-center justify-center overflow-hidden">
+              <div className="aspect-video bg-black overflow-hidden">
                 <iframe
                   src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1`}
                   title={`Video: ${post.title}`}

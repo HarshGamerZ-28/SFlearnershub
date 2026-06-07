@@ -162,25 +162,25 @@ export default function BlogListClient({ initialParams }: Props) {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-1 sm:gap-2 mt-8 sm:mt-12">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-8 sm:mt-12">
           <button
             disabled={page <= 1}
             onClick={() => setPage(p => p - 1)}
-            className="px-2 sm:px-4 py-2 rounded-lg glass text-xs sm:text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
+            className="compact-btn px-3 sm:px-4 py-2 rounded-lg glass text-xs sm:text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
           >
             ← Prev
           </button>
-          <div className="flex gap-0.5 sm:gap-1">
+          <div className="flex gap-1">
             {Array.from({ length: Math.min(totalPages, 7) }).map((_, i) => {
               const p = i + 1;
               return (
                 <button
                   key={p}
                   onClick={() => setPage(p)}
-                  className={`w-8 sm:w-9 h-8 sm:h-9 rounded-lg text-xs sm:text-sm transition-all ${
+                  className={`compact-btn w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm transition-all ${
                     p === page
                       ? "bg-gradient-to-br from-brand-500 to-violet-600 text-white font-bold"
-                      : "glass text-slate-400 hover:text-white"
+                      : "glass text-slate-400 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   {p}
@@ -191,7 +191,7 @@ export default function BlogListClient({ initialParams }: Props) {
           <button
             disabled={page >= totalPages}
             onClick={() => setPage(p => p + 1)}
-            className="px-2 sm:px-4 py-2 rounded-lg glass text-xs sm:text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
+            className="compact-btn px-3 sm:px-4 py-2 rounded-lg glass text-xs sm:text-sm disabled:opacity-30 hover:border-[rgba(91,114,240,0.4)] transition-all"
           >
             Next →
           </button>
@@ -203,9 +203,9 @@ export default function BlogListClient({ initialParams }: Props) {
 
 function ActivePill({ label, onRemove }: { label: string; onRemove: () => void }) {
   return (
-    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-brand-600/15 text-brand-400 border border-brand-500/25">
+    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs bg-brand-600/15 text-brand-500 dark:text-brand-400 border border-brand-500/25">
       {label}
-      <button onClick={onRemove} className="hover:text-white transition-colors"><X size={11} /></button>
+      <button onClick={onRemove} className="compact-btn hover:text-slate-900 dark:hover:text-white transition-colors p-0.5"><X size={11} /></button>
     </span>
   );
 }
